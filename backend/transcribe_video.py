@@ -1,4 +1,4 @@
-import json
+import os
 import sys
 import mlx_whisper
 
@@ -14,18 +14,20 @@ def transcribe(video_path: str = "video.mp4") -> dict:
 
 
 if __name__ == "__main__":
-    video_path = sys.argv[1] if len(sys.argv) > 1 else "video.mp4"
+    if len(sys.argv) < 2:
+        print("Usage: python3 transcribe_video.py <video_path>")
+        sys.exit(1)
+
+    video_path = sys.argv[1]
     result = transcribe(video_path)
 
     transcription_text = result.get("text", "").strip()
 
-    with open("transcription.json", "w") as f:
-        json.dump(result, f, indent=2)
-    print("Full transcription saved to transcription.json")
-
-    with open("transcription.txt", "w") as f:
+    output_dir = os.path.dirname(video_path)
+    txt_path = os.path.join(output_dir, "transcription.txt") if output_dir else "transcription.txt"
+    with open(txt_path, "w") as f:
         f.write(transcription_text)
-    print("Transcription text saved to transcription.txt")
+    print(f"Transcription text saved to {txt_path}")
 
     if transcription_text:
         print(f"\nTranscription:\n{transcription_text}")

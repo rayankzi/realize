@@ -2,6 +2,7 @@ import os
 import re
 import json
 import sys
+import uuid
 import requests
 from urllib.parse import urlencode
 from dotenv import load_dotenv
@@ -74,32 +75,33 @@ def get_instagram_graphql_data(url: str) -> dict | str:
     }
 
 
-def download_video(video_url: str, filename: str = "video.mp4") -> str:
-    """Download video to current directory."""
-    print(f"Downloading video to {filename}...")
+def download_video(video_url: str, output_dir: str) -> str:
+    """Download video into the given directory."""
+    ext = video_url.split("?")[0].rsplit(".", 1)[-1] if "." in video_url.split("?")[0].rsplit("/", 1)[-1] else "mp4"
+    filename = f"video.{ext}"
+    filepath = os.path.join(output_dir, filename)
+    print(f"Downloading video to {filepath}...")
     response = requests.get(video_url, stream=True)
     response.raise_for_status()
-    with open(filename, "wb") as f:
+    with open(filepath, "wb") as f:
         for chunk in response.iter_content(chunk_size=8192):
             f.write(chunk)
-    print(f"Video saved to {filename}")
-    return filename
+    print(f"Video saved to {filepath}")
+    return filepath
 
 
-def download_carousel_images(sidecar: list, display_url: str | None = None) -> str:
-    """Download all images from a carousel post into an images/ folder."""
-    os.makedirs("images", exist_ok=True)
-
+def download_carousel_images(sidecar: list, output_dir: str, display_url: str | None = None) -> str:
+    """Download all images from a carousel post into the given directory."""
     if not sidecar and display_url:
         print("Downloading single image...")
         response = requests.get(display_url, stream=True)
         response.raise_for_status()
-        filepath = os.path.join("images", "image_1.jpg")
+        filepath = os.path.join(output_dir, "image_1.jpg")
         with open(filepath, "wb") as f:
             for chunk in response.iter_content(chunk_size=8192):
                 f.write(chunk)
         print(f"Saved {filepath}")
-        return "images"
+        return output_dir
 
     for i, edge in enumerate(sidecar, 1):
         node = edge.get("node", {})
@@ -109,14 +111,14 @@ def download_carousel_images(sidecar: list, display_url: str | None = None) -> s
         print(f"Downloading image {i}/{len(sidecar)}...")
         response = requests.get(img_url, stream=True)
         response.raise_for_status()
-        filepath = os.path.join("images", f"image_{i}.jpg")
+        filepath = os.path.join(output_dir, f"image_{i}.jpg")
         with open(filepath, "wb") as f:
             for chunk in response.iter_content(chunk_size=8192):
                 f.write(chunk)
         print(f"Saved {filepath}")
 
-    print(f"All images saved to images/")
-    return "images"
+    print(f"All images saved to {output_dir}/")
+    return output_dir
 
 
 if __name__ == "__main__":
@@ -131,17 +133,17 @@ if __name__ == "__main__":
         print(f"Error: {data}")
         sys.exit(1)
 
-    with open("output.json", "w") as f:
-        json.dump(data, f, indent=2)
-    print("Data saved to output.json")
+    output_dir = str(uuid.uuid4())
+    os.makedirs(output_dir, exist_ok=True)
+    print(f"Created directory: {output_dir}")
 
     is_video = data.get("is_video", False)
     typename = data.get("__typename", "")
 
     if is_video and data.get("video_url"):
         print(f"Detected: Reel/Video ({typename})")
-        download_video(data["video_url"])
+        download_video(data["video_url"], output_dir)
     else:
         print(f"Detected: Post/Carousel ({typename})")
         sidecar = data.get("sidecar") or []
-        download_carousel_images(sidecar, data.get("display_url"))
+        download_carousel_images(sidecar, output_dir, data.get("display_url"))

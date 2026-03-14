@@ -1,0 +1,338 @@
+{
+  "__typename": "XDTGraphSidecar",
+  "shortcode": "DV1UF4hlJMC",
+  "dimensions": {
+    "height": 1440,
+    "width": 1080
+  },
+  "display_url": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651011063_17885113932462816_3286333146493502113_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08_tt6&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=4_879FH_hLkQ7kNvwFkNzUK&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfwZc8cq29rJVBiXC9IulizMAd3Aby9jbo3FIaZX6IhWiA&oe=69BB7D35&_nc_sid=10d13b",
+  "display_resources": [
+    {
+      "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651011063_17885113932462816_3286333146493502113_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=4_879FH_hLkQ7kNvwFkNzUK&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfwGFz00kaJEU38sRMiVS_GaTOp8qfJ8BbHcmreCUaLe7w&oe=69BB7D35&_nc_sid=10d13b",
+      "config_width": 640,
+      "config_height": 853
+    },
+    {
+      "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651011063_17885113932462816_3286333146493502113_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=4_879FH_hLkQ7kNvwFkNzUK&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfypLtNAuc_LwFw_KqNYccmq7_ATsRrh8mnZVAoi3nSJaQ&oe=69BB7D35&_nc_sid=10d13b",
+      "config_width": 750,
+      "config_height": 1000
+    },
+    {
+      "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651011063_17885113932462816_3286333146493502113_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=4_879FH_hLkQ7kNvwFkNzUK&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfykdQSaiBdydkkm567MhScMS9k0U3-FzrA1Zh1f0_SHTA&oe=69BB7D35&_nc_sid=10d13b",
+      "config_width": 1080,
+      "config_height": 1440
+    }
+  ],
+  "has_audio": null,
+  "video_url": null,
+  "video_view_count": null,
+  "video_play_count": null,
+  "is_video": false,
+  "caption": "researched and created a roadmap for the data science students >.- \ud83e\udd64\ud83e\udd64\n\nFollow @tinahelloworld for all things tech \ud83c\udf37\u2764\ufe0f",
+  "is_paid_partnership": false,
+  "location": null,
+  "owner": {
+    "id": "73869814815",
+    "username": "tinahelloworld",
+    "is_verified": true,
+    "profile_pic_url": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-19/562552684_17867162205462816_6906414636533424831_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=kgTUXqfTQd8Q7kNvwErqy0C&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfwilETeMQK02aP5-9_kkA26hJvODjQn7sJCL0jFcqBO-Q&oe=69BB6FC9&_nc_sid=10d13b",
+    "blocked_by_viewer": false,
+    "restricted_by_viewer": null,
+    "followed_by_viewer": false,
+    "full_name": "Tina Chi",
+    "has_blocked_viewer": false,
+    "is_embeds_disabled": false,
+    "is_private": false,
+    "is_unpublished": false,
+    "requested_by_viewer": false,
+    "pass_tiering_recommendation": true,
+    "edge_owner_to_timeline_media": {
+      "count": 119
+    },
+    "edge_followed_by": {
+      "count": 68210
+    }
+  },
+  "product_type": null,
+  "video_duration": null,
+  "thumbnail_src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651011063_17885113932462816_3286333146493502113_n.jpg?stp=c0.240.1440.1440a_dst-jpg_e35_s640x640_sh0.08_tt6&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=4_879FH_hLkQ7kNvwFkNzUK&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfzZYPcogkpzbDDTXCiOhKLVAhqsFvbiK5D95beHmnn23A&oe=69BB7D35&_nc_sid=10d13b",
+  "clips_music_attribution_info": null,
+  "sidecar": [
+    {
+      "node": {
+        "__typename": "XDTGraphImage",
+        "id": "3852072245280013411",
+        "shortcode": "DV1T0xFDnxj",
+        "dimensions": {
+          "height": 1440,
+          "width": 1080
+        },
+        "gating_info": null,
+        "fact_check_overall_rating": null,
+        "fact_check_information": null,
+        "sensitivity_friction_info": null,
+        "sharing_friction_info": {
+          "should_have_sharing_friction": false,
+          "bloks_app_url": null
+        },
+        "media_overlay_info": null,
+        "media_preview": "AB8qe8e0ZqPzpudoyF74J/rVyY5Xb6dxUEcW3PXOexx9M81mldXZTdinHcys2F5J7Yq5H55OMEDvwB/OojEA2FXB5PXtjtz+dV3dPUH8aOVdhk2478c4657dPy602a6EIwc5J/T1/OtFYQ6EJhcYHOTVd7FmIbKZA4yv6/dP4etOL0E7X1ZlwTksBzkk9/rxip5VURg4Gcn696vLZFcFimR/s/p90c/yqC7tJExypBz0yOe9Gwb7NFwSNGCB0PqM1Wub+WNNy4zkfwg1OelU7kAoc1mmU0T297JJGGbbk5/hHrUkkjSAA9qrW4xGuPT+tL3pNu7BJH//2Q==",
+        "display_url": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651011063_17885113932462816_3286333146493502113_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08_tt6&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=4_879FH_hLkQ7kNvwFkNzUK&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfwZc8cq29rJVBiXC9IulizMAd3Aby9jbo3FIaZX6IhWiA&oe=69BB7D35&_nc_sid=10d13b",
+        "display_resources": [
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651011063_17885113932462816_3286333146493502113_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=4_879FH_hLkQ7kNvwFkNzUK&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfwGFz00kaJEU38sRMiVS_GaTOp8qfJ8BbHcmreCUaLe7w&oe=69BB7D35&_nc_sid=10d13b",
+            "config_width": 640,
+            "config_height": 853
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651011063_17885113932462816_3286333146493502113_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=4_879FH_hLkQ7kNvwFkNzUK&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfypLtNAuc_LwFw_KqNYccmq7_ATsRrh8mnZVAoi3nSJaQ&oe=69BB7D35&_nc_sid=10d13b",
+            "config_width": 750,
+            "config_height": 1000
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651011063_17885113932462816_3286333146493502113_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=4_879FH_hLkQ7kNvwFkNzUK&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfykdQSaiBdydkkm567MhScMS9k0U3-FzrA1Zh1f0_SHTA&oe=69BB7D35&_nc_sid=10d13b",
+            "config_width": 1080,
+            "config_height": 1440
+          }
+        ],
+        "accessibility_caption": "Photo by Tina Chi on March 13, 2026. May be a graphic of poster, magazine and text that says 'DESRLENG -.OI-...N 777\u0e2e\u0e22 DATA SCTENCE Jan Feb 4-year university guide ds survival guide for success *\u12ce\u122e\u1229 Mar Man Apr May Wed Jun Jul Fri Aug Sap Oct Nav Dac Learn ON we count cantributions \u00ae \u00b7\u00b7. Less 0E \u00b7 0 o'.",
+        "is_video": false,
+        "tracking_token": "eyJ2ZXJzaW9uIjo1LCJwYXlsb2FkIjp7ImlzX2FuYWx5dGljc190cmFja2VkIjp0cnVlLCJ1dWlkIjoiMDA1OWJiMGEtZWJkMi00MjE1LTg4MTMtZWJiZTkwMDliOWI4Mzg1MjA3MjI0NTI4MDAxMzQxMSJ9LCJzaWduYXR1cmUiOiIifQ==",
+        "upcoming_event": null,
+        "edge_media_to_tagged_user": {
+          "edges": []
+        }
+      }
+    },
+    {
+      "node": {
+        "__typename": "XDTGraphImage",
+        "id": "3852072249809882789",
+        "shortcode": "DV1T01TDs6l",
+        "dimensions": {
+          "height": 1440,
+          "width": 1080
+        },
+        "gating_info": null,
+        "fact_check_overall_rating": null,
+        "fact_check_information": null,
+        "sensitivity_friction_info": null,
+        "sharing_friction_info": {
+          "should_have_sharing_friction": false,
+          "bloks_app_url": null
+        },
+        "media_overlay_info": null,
+        "media_preview": "AB8qzOozkfmM/lS+U3Uj9R/9erMa/LipvLBPP8zSAzxEx6kfnVkLt49qkaNR149utG3kUwJTGMc/oTSgDHUj8TUPmEDOeM9cZ/UH+gqSOTPTn8MUABQHvT5FC47/AP6qUZY8/wAqjk3dD0oAhQhV2g47cjr71YjX5c7vpxWfLxj61fX/AFQ+n9aSGx6ZB+9kYPGP60Meaih6/nUjdRTEf//Z",
+        "display_url": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651227849_17885113941462816_939481484768934285_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08_tt6&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=YQfgnZkzrmEQ7kNvwE__IkB&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfwIDbmMgrzFAts90hary2-5PyPmLdW-nKRNK6FFVboF1g&oe=69BB9814&_nc_sid=10d13b",
+        "display_resources": [
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651227849_17885113941462816_939481484768934285_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=YQfgnZkzrmEQ7kNvwE__IkB&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfzAawqKLty_Xund_oQmJoywcDfmLL9yy7yaRT3I6JRiKw&oe=69BB9814&_nc_sid=10d13b",
+            "config_width": 640,
+            "config_height": 853
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651227849_17885113941462816_939481484768934285_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=YQfgnZkzrmEQ7kNvwE__IkB&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfwRTLVm-_MxmZN5mSr9718jxKuBsoQ_HB0t9KxKuJSgWA&oe=69BB9814&_nc_sid=10d13b",
+            "config_width": 750,
+            "config_height": 1000
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/651227849_17885113941462816_939481484768934285_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=YQfgnZkzrmEQ7kNvwE__IkB&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfyPzWsUTgxH5rLf7BkqN2-kUndGYt34TYjXO1fDVoHIiA&oe=69BB9814&_nc_sid=10d13b",
+            "config_width": 1080,
+            "config_height": 1440
+          }
+        ],
+        "accessibility_caption": "Photo by Tina Chi on March 13, 2026. May be an image of text that says 'Year 1 Focus: master math- + intro programning fundamentals S Classes Programming &2 (Python) Calculus & 2 (derivatives + integrals) Linear Algebra (vectors + matrices) Intro Statistics Probability General Education courses Learn & do these Python for data (numpy, pandas, matplotlib) Jupyter notebooks & exploratory analysis Basic SQL queries Data cleaning & visualization Create GitHub portfolio for projects Project Projectldeas* Ideas* Exploratory data analysis on public dataset (cleaning + visualization + insights) Movie recommendation system (collaborative filtering similarity)'.",
+        "is_video": false,
+        "tracking_token": "eyJ2ZXJzaW9uIjo1LCJwYXlsb2FkIjp7ImlzX2FuYWx5dGljc190cmFja2VkIjp0cnVlLCJ1dWlkIjoiMDA1OWJiMGEtZWJkMi00MjE1LTg4MTMtZWJiZTkwMDliOWI4Mzg1MjA3MjI0OTgwOTg4Mjc4OSJ9LCJzaWduYXR1cmUiOiIifQ==",
+        "upcoming_event": null,
+        "edge_media_to_tagged_user": {
+          "edges": []
+        }
+      }
+    },
+    {
+      "node": {
+        "__typename": "XDTGraphImage",
+        "id": "3852072252167465676",
+        "shortcode": "DV1T03flKrM",
+        "dimensions": {
+          "height": 1440,
+          "width": 1080
+        },
+        "gating_info": null,
+        "fact_check_overall_rating": null,
+        "fact_check_information": null,
+        "sensitivity_friction_info": null,
+        "sharing_friction_info": {
+          "should_have_sharing_friction": false,
+          "bloks_app_url": null
+        },
+        "media_overlay_info": null,
+        "media_preview": "AB8qggJI9u3+frUsjMoyP8f6iqls4ChiPXJ4zVsurDkEj8KQAm4qMjB9KXkVE0yIPQds4qH7Vnop/SgBYrbK8Mw6/T+VSmDcNpJP1/nwKVGfaMY/HOf0FLuK9sk9xn/61AyE2Cj/APXQ0PljAp87SHAUcf59aZyOtAEirhc8nr0OKWMbjuwccY+b/wCvUJ6UiDC8UATucdc/j0quTmkamZpAf//Z",
+        "display_url": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652006718_17885113950462816_4931358718594082656_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08_tt6&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=E2_ZTEJ3HkQQ7kNvwFr9E5v&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afy1zaETtbAl6OBevj2e7D_HiazBL27E_k79Kh0zCRQm2Q&oe=69BB8A2B&_nc_sid=10d13b",
+        "display_resources": [
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652006718_17885113950462816_4931358718594082656_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=E2_ZTEJ3HkQQ7kNvwFr9E5v&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afzhebz2tnJ20G8QKDxFHFOiSBuqNv-AQwEPWFbn79O4TQ&oe=69BB8A2B&_nc_sid=10d13b",
+            "config_width": 640,
+            "config_height": 853
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652006718_17885113950462816_4931358718594082656_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=E2_ZTEJ3HkQQ7kNvwFr9E5v&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfzTxPi9bg2H1E-96MUZwGnez10b6J9dAlbVfeOw7m9sYA&oe=69BB8A2B&_nc_sid=10d13b",
+            "config_width": 750,
+            "config_height": 1000
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652006718_17885113950462816_4931358718594082656_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=E2_ZTEJ3HkQQ7kNvwFr9E5v&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfzPQu5O_zKi9tRox9RGHIGQyyNuyW2FzrlvI8Br1mifNw&oe=69BB8A2B&_nc_sid=10d13b",
+            "config_width": 1080,
+            "config_height": 1440
+          }
+        ],
+        "accessibility_caption": "Photo by Tina Chi on March 13, 2026. May be an image of capacitor, circuit board and text that says 'Year land first Focus: bui build ld ML fundanentals internships ps Classes '. Data Structures & Algorithms Probability & Mathematical Statistics Database Systems (SQL + data models) Machine Learning fundamentals Data Visualization Learn & do these Regression & classification models Model evaluation (accuracy, precision, recall) Build strong ML portfolio projects Apply to internships early (Aug- (Aug-Oct) Participate in Kaggle competitions Project Ideas Housing price prediction model (regression feature engineering) Fraud detection classifier (random forest gradient boosting) Interactive data dashboard (streamlit tableau powerBI)'.",
+        "is_video": false,
+        "tracking_token": "eyJ2ZXJzaW9uIjo1LCJwYXlsb2FkIjp7ImlzX2FuYWx5dGljc190cmFja2VkIjp0cnVlLCJ1dWlkIjoiMDA1OWJiMGEtZWJkMi00MjE1LTg4MTMtZWJiZTkwMDliOWI4Mzg1MjA3MjI1MjE2NzQ2NTY3NiJ9LCJzaWduYXR1cmUiOiIifQ==",
+        "upcoming_event": null,
+        "edge_media_to_tagged_user": {
+          "edges": []
+        }
+      }
+    },
+    {
+      "node": {
+        "__typename": "XDTGraphImage",
+        "id": "3852072257058356881",
+        "shortcode": "DV1T08DGb6R",
+        "dimensions": {
+          "height": 1440,
+          "width": 1080
+        },
+        "gating_info": null,
+        "fact_check_overall_rating": null,
+        "fact_check_information": null,
+        "sensitivity_friction_info": null,
+        "sharing_friction_info": {
+          "should_have_sharing_friction": false,
+          "bloks_app_url": null
+        },
+        "media_overlay_info": null,
+        "media_preview": "AB8qxoYSwJIyOxqSOMhmAGBx/nqKkt0BTkDv2561LFGgduewzyP5UgGhGxyKhuAQh/CrrRr2IqldDC49x0oGWCEZR5W4dScf/XBoCnOcn8SD/IVYUFVGMfr/AEFN2kNnGfpn/CkgIiGb7x5H61UuHBX3yKuyxZPcHHqR1+lVGty/U80wLisWxwcexxUqk/5astuCKfH0FIZdZcnOD/SmP1xTfT/Peg0gP//Z",
+        "display_url": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652769308_17885113980462816_4620015527726722703_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08_tt6&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=PEmQFVVX_GEQ7kNvwF9wKZ5&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afza9Z-7lTWVp3njPI7hOnZ2Qxd55wl08C_C4q7NV2o1Nw&oe=69BB9623&_nc_sid=10d13b",
+        "display_resources": [
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652769308_17885113980462816_4620015527726722703_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=PEmQFVVX_GEQ7kNvwF9wKZ5&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfzV-ODdDeNrR_XcvkqD4OS1BoOptyj4dGALAtssyajdog&oe=69BB9623&_nc_sid=10d13b",
+            "config_width": 640,
+            "config_height": 853
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652769308_17885113980462816_4620015527726722703_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=PEmQFVVX_GEQ7kNvwF9wKZ5&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afz9rssVzfURHs9sYKkaKQktyhVBXr-2QLhjZmHg5lhqYg&oe=69BB9623&_nc_sid=10d13b",
+            "config_width": 750,
+            "config_height": 1000
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652769308_17885113980462816_4620015527726722703_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=PEmQFVVX_GEQ7kNvwF9wKZ5&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfzrqyeSnjLMEcER0B2wl0IIuihx2lc1jVFbwKE93Qz0hQ&oe=69BB9623&_nc_sid=10d13b",
+            "config_width": 1080,
+            "config_height": 1440
+          }
+        ],
+        "accessibility_caption": "Photo by Tina Chi on March 13, 2026. May be an image of text that says 'Year Focusadvanced Focus: ML + high-impact internships Classes Advanced Machine Learning Deep Learning Neural Networks Big Data Systems (spark/ distributed data) Data Mining Natural Language Processing Learn & do these Deep learning (pytorch or tensorflow) Experiment tracking (wandb mlflow) Large dataset processing (spark pyspark) System design for ML pipelines Apply to top DS/ DS/ML ML internships early Project Ideas* Deep learning image classifier (CNN using pytorch) NLP sentiment analysis system (transformers LLM fine- ne-tuning) End-to-end ML pipeline (data ingestion- \u2192 training deployment)'.",
+        "is_video": false,
+        "tracking_token": "eyJ2ZXJzaW9uIjo1LCJwYXlsb2FkIjp7ImlzX2FuYWx5dGljc190cmFja2VkIjp0cnVlLCJ1dWlkIjoiMDA1OWJiMGEtZWJkMi00MjE1LTg4MTMtZWJiZTkwMDliOWI4Mzg1MjA3MjI1NzA1ODM1Njg4MSJ9LCJzaWduYXR1cmUiOiIifQ==",
+        "upcoming_event": null,
+        "edge_media_to_tagged_user": {
+          "edges": []
+        }
+      }
+    },
+    {
+      "node": {
+        "__typename": "XDTGraphImage",
+        "id": "3852072260506527845",
+        "shortcode": "DV1T0_QoKhl",
+        "dimensions": {
+          "height": 1440,
+          "width": 1080
+        },
+        "gating_info": null,
+        "fact_check_overall_rating": null,
+        "fact_check_information": null,
+        "sensitivity_friction_info": null,
+        "sharing_friction_info": {
+          "should_have_sharing_friction": false,
+          "bloks_app_url": null
+        },
+        "media_overlay_info": null,
+        "media_preview": "AB8qijXKg/5602ZSCMf5/lT4fu4wO/NLtLH0/wDr/jWcVqUysqHZtKjPr3qNU2nnB9jVohQOWqop+bPY1TBFuJMjI/r/AI/0qXy9oxnH4n/Gm25O3/8AXSyk49R+NJMChOhzksRjj/GoY1IIPUY61Lcttxwec9zUkQG0duOlNsCzBIAMdxUzSiqUXU/h/WpjUXGU7w7sEA4FSxZ2j6CpSKaelFwP/9k=",
+        "display_url": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/649924094_17885113977462816_8463952541337446213_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08_tt6&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=5m0Aw6OouMcQ7kNvwE4_7lD&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfyLxqSubScE0UDKvqg91VY0F-UXC9Y3rpeEUMED2Magng&oe=69BB9E39&_nc_sid=10d13b",
+        "display_resources": [
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/649924094_17885113977462816_8463952541337446213_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=5m0Aw6OouMcQ7kNvwE4_7lD&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfwDa7bVGiq1GL_jo3fhhBraOpzF8PPPruLmQ8L5iDLd-A&oe=69BB9E39&_nc_sid=10d13b",
+            "config_width": 640,
+            "config_height": 853
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/649924094_17885113977462816_8463952541337446213_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=5m0Aw6OouMcQ7kNvwE4_7lD&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afx8yv4cZRkkWz-PIwOsrn2_VJFYOIj6AurmnVEal2haHQ&oe=69BB9E39&_nc_sid=10d13b",
+            "config_width": 750,
+            "config_height": 1000
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/649924094_17885113977462816_8463952541337446213_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=5m0Aw6OouMcQ7kNvwE4_7lD&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfwLDtSAd1QqogH-cBS-UU1xXheyFbRpb6CGRhP1TelVXQ&oe=69BB9E39&_nc_sid=10d13b",
+            "config_width": 1080,
+            "config_height": 1440
+          }
+        ],
+        "accessibility_caption": "Photo by Tina Chi on March 13, 2026. May be an image of calendar, poster and text that says 'Year 4 Focus: specialize ize & bui build level AI systens production- ion- Classes '. Senior Capstone Data Science Project Reinforcement Learning or Advanced ML Distributed Data Systems AI Ethics Responsible AI Learn & do these Deploy ML models (fastapi + docker) Production ML pipelines (MLOps) Publish projects & technical blogs to data science ML roles early Choose specialization (ML engineer, data scientist, analytics, AI) Project Ideas Production ML API (real-time prediction service) Large-scale data pipeline spark + cloud infrastructure) Reverse- Reverse-engineer real datasets and build predictive models'.",
+        "is_video": false,
+        "tracking_token": "eyJ2ZXJzaW9uIjo1LCJwYXlsb2FkIjp7ImlzX2FuYWx5dGljc190cmFja2VkIjp0cnVlLCJ1dWlkIjoiMDA1OWJiMGEtZWJkMi00MjE1LTg4MTMtZWJiZTkwMDliOWI4Mzg1MjA3MjI2MDUwNjUyNzg0NSJ9LCJzaWduYXR1cmUiOiIifQ==",
+        "upcoming_event": null,
+        "edge_media_to_tagged_user": {
+          "edges": []
+        }
+      }
+    },
+    {
+      "node": {
+        "__typename": "XDTGraphImage",
+        "id": "3852072260428894527",
+        "shortcode": "DV1T0_MABE_",
+        "dimensions": {
+          "height": 1440,
+          "width": 1080
+        },
+        "gating_info": null,
+        "fact_check_overall_rating": null,
+        "fact_check_information": null,
+        "sensitivity_friction_info": null,
+        "sharing_friction_info": {
+          "should_have_sharing_friction": false,
+          "bloks_app_url": null
+        },
+        "media_overlay_info": null,
+        "media_preview": "AB8qxEjaT7gLY64BNNwTWlZtJGNsZKkjceOT6dieB/OqnO9i3B6nPHU0hkGMUlTuRnnH6/0qJsdv6/1oA0omRGVzwFP9Mc067iV+YyGBGQB1X2+lVZQ0Z2t/EAxHpu5x/LPvUexwc5wRRbqFyvRUnlmo6AJmY555wBj6DpQmXBHekjOetEX3qYiM0lOf7x+tNpDP/9k=",
+        "display_url": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652755660_17885113962462816_5446004474083893786_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08_tt6&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=YJXPoXtJqhMQ7kNvwE-kN5B&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afzf9yKpN7U0eFXxSr6pjWyf11i_Je3lY_r9YiFS2HnI1Q&oe=69BB8FEA&_nc_sid=10d13b",
+        "display_resources": [
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652755660_17885113962462816_5446004474083893786_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=YJXPoXtJqhMQ7kNvwE-kN5B&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfzjAJEQQWhoDCXbPoaJSR8zHcZdFpCD1HkZkHY2EPspPQ&oe=69BB8FEA&_nc_sid=10d13b",
+            "config_width": 640,
+            "config_height": 853
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652755660_17885113962462816_5446004474083893786_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=YJXPoXtJqhMQ7kNvwE-kN5B&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfxGSKFiZ35AtT75ebf5-5zyhIsDqa77ZxradWh86TJ7hA&oe=69BB8FEA&_nc_sid=10d13b",
+            "config_width": 750,
+            "config_height": 1000
+          },
+          {
+            "src": "https://scontent-phx1-1.cdninstagram.com/v/t51.82787-15/652755660_17885113962462816_5446004474083893786_n.jpg?stp=dst-jpg_e35_p1080x1080_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE5MjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-phx1-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFif_0dEFkymssPJbOZStE7Whyq55O_myhvUuNSuUv_av3EbMNggXM9PS0izzrwHMfRDSbw2aPljJCrhbn04arF&_nc_ohc=YJXPoXtJqhMQ7kNvwE-kN5B&_nc_gid=ItegM4stEhIk7UEAXrL0Bg&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfzQWOy3sHZbo8IlfHLCuT2umQhH_qa6IOlvYHXrZ6M-uw&oe=69BB8FEA&_nc_sid=10d13b",
+            "config_width": 1080,
+            "config_height": 1440
+          }
+        ],
+        "accessibility_caption": "Photo by Tina Chi on March 13, 2026. May be an image of hat, parka, sweatshirt, sweatpants, pie, top and text that says 'sincerely, a CS senior, inconing eng @ apple, app 5x intern, and passionate andpassionatedeveloper 1onate deve developer loper i post coding, tech, CS, uni content follow to level up programming lo\u300d'.",
+        "is_video": false,
+        "tracking_token": "eyJ2ZXJzaW9uIjo1LCJwYXlsb2FkIjp7ImlzX2FuYWx5dGljc190cmFja2VkIjp0cnVlLCJ1dWlkIjoiMDA1OWJiMGEtZWJkMi00MjE1LTg4MTMtZWJiZTkwMDliOWI4Mzg1MjA3MjI2MDQyODg5NDUyNyJ9LCJzaWduYXR1cmUiOiIifQ==",
+        "upcoming_event": null,
+        "edge_media_to_tagged_user": {
+          "edges": []
+        }
+      }
+    }
+  ]
+}

@@ -140,6 +140,13 @@ if __name__ == "__main__":
     is_video = data.get("is_video", False)
     typename = data.get("__typename", "")
 
+    caption = data.get("caption")
+    if caption:
+        caption_path = os.path.join(output_dir, "captions.txt")
+        with open(caption_path, "w") as f:
+            f.write(caption)
+        print(f"Caption saved to {caption_path}")
+
     if is_video and data.get("video_url"):
         print(f"Detected: Reel/Video ({typename})")
         download_video(data["video_url"], output_dir)

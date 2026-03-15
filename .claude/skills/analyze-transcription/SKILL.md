@@ -20,40 +20,48 @@ Read a video transcription and determine whether frame-by-frame visual extractio
 Frame-by-frame extraction is likely required when the speaker:
 
 **Direct screen references:**
+
 - "look at this", "watch this", "check this out", "as you can see"
 - "right here", "over here", "this right here", "this part"
 - "on screen", "on the screen", "what's showing"
 
 **Demonstrating or showing something:**
+
 - "let me show you", "I'll show you", "showing you", "here's what it looks like"
 - "watch how", "watch me", "see how", "notice how"
 - "this is what", "this is how", "here's the result"
 
 **Referencing text overlays or captions:**
+
 - "it says", "as it says", "read that", "the text says"
 - "the caption", "the title", "the label"
 - references to numbers, stats, or data shown visually
 
 **Before/after or comparisons:**
+
 - "before and after", "the difference", "compared to", "versus"
 - "on the left", "on the right", "side by side", "top vs bottom"
 
 **Tutorials, demos, or physical actions:**
+
 - step-by-step instructions implying visual demonstration (cooking, makeup, DIY, coding walkthrough)
 - "first you", "then you", "next step" combined with action verbs (apply, put, place, drag, click, tap, swipe)
 - "follow along", "do this", "like this"
 
 **Reactions to visual content:**
+
 - "look at that", "oh my god look", "did you see that"
 - reacting to something without describing it verbally
 - laughter or exclamations with no verbal context for what triggered them
 
 **Product or place showcases:**
+
 - "this product", "this place", "this spot", "this fit", "this outfit"
 - unboxing, hauls, try-ons, room tours
 - "here's what I got", "let me try this on"
 
 **Referencing other media:**
+
 - "this video", "this clip", "this photo", "this meme"
 - duets, stitches, or reaction-style content where context depends on the original visual
 
@@ -72,6 +80,7 @@ After analyzing, output your reasoning followed by a clear verdict:
 - If frame extraction is NOT required: include the word **NO** (all caps) in your response. Do not include the word "YES" in all caps.
 
 Example output:
+
 ```
 The transcription contains several references to on-screen content:
 - "look at this right here" (suggesting visual demonstration)

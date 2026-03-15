@@ -84,6 +84,18 @@ def analyze_video(url: str) -> None:
         frames_dir = os.path.join(output_dir, "frames")
         extract_frames(video_path, frames_dir)
 
+        # Filter frames — keep only visually meaningful ones
+        print("Filtering frames for visual relevance...")
+        subprocess.run(
+            [
+                "claude",
+                "-p", f"/analyze-frames {os.path.abspath(output_dir)}",
+                "--allowedTools", "Read,Glob,Bash",
+                "--model", "sonnet",
+            ],
+            check=True,
+        )
+
     # Invoke analyze-video skill
     abs_dir = os.path.abspath(output_dir)
     print(f"\nInvoking analyze-video skill on {abs_dir}...")

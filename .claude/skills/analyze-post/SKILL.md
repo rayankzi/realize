@@ -11,18 +11,18 @@ Read all images and the caption from an Instagram post's UUID directory, then sy
 
 ## How to Use
 
-The skill is invoked with one argument: the path to the UUID directory containing the post's images and `caption.txt`.
+The skill is invoked with one argument: the path to the UUID directory containing the post's images and `captions.txt`.
 
 ### Step 1: Validate the Directory
 
 1. Use the Glob tool to find all image files matching `image_*.jpg` in the provided directory.
-2. Use the Read tool to read `caption.txt` from the provided directory.
-3. If no images are found or `caption.txt` is missing, inform the user and stop.
+2. Use the Read tool to read `captions.txt` from the provided directory.
+3. If no images are found or `captions.txt` is missing, inform the user and stop.
 
 ### Step 2: Read All Content
 
 1. Use the Read tool to read **every** image file found (e.g., `image_1.jpg`, `image_2.jpg`, etc.). The Read tool supports viewing images natively.
-2. Note the caption text you already read from `caption.txt`.
+2. Note the caption text you already read from `captions.txt`.
 
 ### Step 3: Analyze and Generate Output
 
@@ -60,6 +60,12 @@ Act as an expert content analyst and archivist. Analyze the visual content of al
 ### Step 4: Save the Output
 
 1. Extract the UUID from the directory path (the last segment of the path).
-2. Ensure the `output/` directory exists at the project root. If not, create it using Bash: `mkdir -p output`
-3. Write the analysis markdown to `output/<uuid>-analysis.md` using the Write tool.
-4. Inform the user that the analysis has been saved and provide the output path.
+2. Ensure the `output/` directory exists at the project root (`/Users/rayankazi/Developer/projects/realize/output/`). If not, create it using Bash: `mkdir -p /Users/rayankazi/Developer/projects/realize/output`
+3. Write the analysis markdown to `/Users/rayankazi/Developer/projects/realize/output/<uuid>-analysis.md` using the Write tool.
+
+### Step 5: Rename the Output File
+
+1. Read the analysis file you just wrote to determine the topic/theme of the content.
+2. Based on the title and topic, generate a short, descriptive, kebab-case filename (e.g., `data-science-roadmap.md`, `quick-pasta-recipe.md`, `productivity-tips.md`). Keep it concise (3-5 words max).
+3. Rename the file using Bash: `mv /Users/rayankazi/Developer/projects/realize/output/<uuid>-analysis.md /Users/rayankazi/Developer/projects/realize/output/<new-name>.md`
+4. Inform the user that the analysis has been saved and provide the final output path.

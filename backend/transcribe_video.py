@@ -1,5 +1,4 @@
 import os
-import sys
 import mlx_whisper
 
 
@@ -13,14 +12,9 @@ def transcribe(video_path: str = "video.mp4") -> dict:
     return result
 
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python3 transcribe_video.py <video_path>")
-        sys.exit(1)
-
-    video_path = sys.argv[1]
+def transcribe_and_save(video_path: str) -> str:
+    """Transcribe video and save the text to a file. Returns the output path."""
     result = transcribe(video_path)
-
     transcription_text = result.get("text", "").strip()
 
     output_dir = os.path.dirname(video_path)
@@ -29,7 +23,4 @@ if __name__ == "__main__":
         f.write(transcription_text)
     print(f"Transcription text saved to {txt_path}")
 
-    if transcription_text:
-        print(f"\nTranscription:\n{transcription_text}")
-    else:
-        print("\nNo transcription text found (empty or silent video).")
+    return txt_path

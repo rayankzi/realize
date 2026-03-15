@@ -1,18 +1,18 @@
 import os
 import re
 import json
-import sys
-import uuid
 import requests
 from urllib.parse import urlencode
 from dotenv import load_dotenv
 
-load_dotenv()
-_user_agent = os.getenv("USER_AGENT")
-_x_ig_app_id = os.getenv("X_IG_APP_ID")
-if not _user_agent or not _x_ig_app_id:
-    print("Required headers not found in ENV")
-    exit(1)
+def _load_env():
+    load_dotenv()
+    user_agent = os.getenv("USER_AGENT")
+    x_ig_app_id = os.getenv("X_IG_APP_ID")
+    if not user_agent or not x_ig_app_id:
+        print("Required headers not found in ENV")
+        exit(1)
+    return user_agent, x_ig_app_id
 
 
 def get_id(url: str) -> str | None:
@@ -26,6 +26,8 @@ def get_id(url: str) -> str | None:
 
 def get_instagram_graphql_data(url: str) -> dict | str:
     """Get instagram data from URL string."""
+    user_agent, x_ig_app_id = _load_env()
+
     ig_id = get_id(url)
     if not ig_id:
         return "Invalid URL"
@@ -37,9 +39,9 @@ def get_instagram_graphql_data(url: str) -> dict | str:
         "lsd": "AVqbxe3J_YA",
     }
     headers = {
-        "User-Agent": _user_agent,
+        "User-Agent": user_agent,
         "Content-Type": "application/x-www-form-urlencoded",
-        "X-IG-App-ID": _x_ig_app_id,
+        "X-IG-App-ID": x_ig_app_id,
         "X-FB-LSD": "AVqbxe3J_YA",
         "X-ASBD-ID": "129477",
         "Sec-Fetch-Site": "same-origin",
@@ -119,38 +121,3 @@ def download_carousel_images(sidecar: list, output_dir: str, display_url: str | 
 
     print(f"All images saved to {output_dir}/")
     return output_dir
-
-
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python3 get_instagram_data.py <instagram_url>")
-        sys.exit(1)
-
-    url = sys.argv[1]
-    data = get_instagram_graphql_data(url)
-
-    if isinstance(data, str):
-        print(f"Error: {data}")
-        sys.exit(1)
-
-    output_dir = str(uuid.uuid4())
-    os.makedirs(output_dir, exist_ok=True)
-    print(f"Created directory: {output_dir}")
-
-    is_video = data.get("is_video", False)
-    typename = data.get("__typename", "")
-
-    caption = data.get("caption")
-    if caption:
-        caption_path = os.path.join(output_dir, "captions.txt")
-        with open(caption_path, "w") as f:
-            f.write(caption)
-        print(f"Caption saved to {caption_path}")
-
-    if is_video and data.get("video_url"):
-        print(f"Detected: Reel/Video ({typename})")
-        download_video(data["video_url"], output_dir)
-    else:
-        print(f"Detected: Post/Carousel ({typename})")
-        sidecar = data.get("sidecar") or []
-        download_carousel_images(sidecar, output_dir, data.get("display_url"))

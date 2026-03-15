@@ -3,8 +3,11 @@ import subprocess
 import sys
 
 
-def extract_frames(video_path: str = "video.mp4", output_dir: str = "frames", fps: int = 1):
-    """Extract video frames at 1 frame per second using ffmpeg."""
+def extract_frames(video_path: str, output_dir: str, fps: int = 1) -> int:
+    """Extract video frames at 1 frame per second using ffmpeg.
+
+    Returns the number of frames extracted.
+    """
     os.makedirs(output_dir, exist_ok=True)
 
     cmd = [
@@ -24,8 +27,4 @@ def extract_frames(video_path: str = "video.mp4", output_dir: str = "frames", fp
 
     frame_count = len([f for f in os.listdir(output_dir) if f.endswith(".jpg")])
     print(f"Extracted {frame_count} frames to {output_dir}/")
-
-
-if __name__ == "__main__":
-    video_path = sys.argv[1] if len(sys.argv) > 1 else "video.mp4"
-    extract_frames(video_path)
+    return frame_count

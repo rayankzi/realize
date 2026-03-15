@@ -37,23 +37,30 @@ Act as an expert content analyst and archivist. Analyze the visual content of al
 ---
 
 ## Executive Summary
+
 [Provide a short paragraph summarizing the main takeaway, blending the context from the caption with the visual narrative of the images.]
 
 ## Key Insights & Main Ideas
+
 [Extract the most important points. Use bullet points for readability. If the post is informational, list the top facts. If it's a recipe or tutorial, list the core techniques or ingredients/tools required.]
-* **Insight 1:** [Detail]
-* **Insight 2:** [Detail]
-* **Insight 3:** [Detail]
+
+- **Insight 1:** [Detail]
+- **Insight 2:** [Detail]
+- **Insight 3:** [Detail]
 
 ## Detailed Breakdown / Step-by-Step
+
 [Use this section to break down the carousel progression. Depending on the content type, use the most appropriate format below:]
-* **If it's a Step-by-Step/Recipe:** Provide a numbered list of instructions combining text from the images and caption.
-* **If it's an Informational Carousel:** Provide a slide-by-slide summary (e.g., **Slide 1:** [Focus], **Slide 2:** [Focus]).
+
+- **If it's a Step-by-Step/Recipe:** Provide a numbered list of instructions combining text from the images and caption.
+- **If it's an Informational Carousel:** Provide a slide-by-slide summary (e.g., **Slide 1:** [Focus], **Slide 2:** [Focus]).
 
 ## Notable Visual Context
+
 [Describe any important visual cues that add value to the information. Are there charts, diagrams, specific UI elements shown, or before/after visual proof? Summarize what the visuals communicate that the text alone doesn't.]
 
 ## Call to Action / Conclusion
+
 [Summarize any final thoughts, tips, or calls to action mentioned in the caption (e.g., "Save this for later," "Check the link in bio," or specific hashtags used that indicate the broader theme).]
 ```
 

@@ -3,9 +3,9 @@ import sys
 import uuid
 import subprocess
 
-from get_instagram_data import download_video
-from transcribe_video import transcribe_and_save
-from extract_frames import extract_frames
+from fetchers.get_instagram_data import download_video
+from processing.transcribe_video import transcribe_and_save
+from processing.extract_frames import extract_frames
 
 
 def analyze_video(data: dict) -> None:
@@ -15,7 +15,7 @@ def analyze_video(data: dict) -> None:
         print("Error: No video URL found in the post data.")
         sys.exit(1)
 
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     data_dir = os.path.join(project_root, "data")
     output_dir = os.path.join(data_dir, str(uuid.uuid4()))
     os.makedirs(output_dir, exist_ok=True)

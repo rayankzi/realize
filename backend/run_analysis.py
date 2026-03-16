@@ -1,8 +1,11 @@
 import sys
+import os
 
-from get_instagram_data import get_instagram_graphql_data
-from analyze_video import analyze_video
-from analyze_post import analyze_post
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from fetchers.get_instagram_data import get_instagram_graphql_data
+from analysis.analyze_video import analyze_video
+from analysis.analyze_post import analyze_post
 
 
 def main():

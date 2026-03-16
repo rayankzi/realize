@@ -3,12 +3,12 @@ import sys
 import uuid
 import subprocess
 
-from get_instagram_data import download_carousel_images
+from fetchers.get_instagram_data import download_carousel_images
 
 
 def analyze_post(data: dict) -> None:
     """Download Instagram post images and invoke the analyze-post skill."""
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     data_dir = os.path.join(project_root, "data")
     output_dir = os.path.join(data_dir, str(uuid.uuid4()))
     os.makedirs(output_dir, exist_ok=True)

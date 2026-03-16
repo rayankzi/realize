@@ -1,31 +1,45 @@
+import Link from "next/link";
+import { getAllPosts } from "@/lib/posts";
 import {
   Card,
-  CardAction,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 export default function Home() {
+  const posts = getAllPosts();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <Card className="w-full max-w-full">
-        <CardHeader>
-          <CardTitle>Card Title</CardTitle>
-          <CardDescription>Card Description</CardDescription>
-          <CardAction>Card Action</CardAction>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-          <Button>Hello</Button>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </Card>
+    <div className="mx-auto max-w-3xl px-6 py-16">
+      <header className="mb-12">
+        <h1 className="text-4xl font-bold tracking-tight">Blog</h1>
+        <p className="mt-2 text-muted-foreground">
+          Thoughts, ideas, and explorations.
+        </p>
+      </header>
+      <div className="flex flex-col gap-4">
+        {posts.map((post) => (
+          <Link key={post.slug} href={`/blog/${post.slug}`}>
+            <Card className="transition-colors hover:bg-muted/50">
+              <CardHeader>
+                <CardTitle className="text-xl">{post.title}</CardTitle>
+                <CardDescription>
+                  <time dateTime={post.date}>
+                    {new Date(post.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </time>
+                  {" — "}
+                  {post.description}
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

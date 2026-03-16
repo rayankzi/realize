@@ -3,25 +3,13 @@ import sys
 import uuid
 import subprocess
 
-from get_instagram_data import get_instagram_graphql_data, download_video
+from get_instagram_data import download_video
 from transcribe_video import transcribe_and_save
 from extract_frames import extract_frames
 
 
-def analyze_video(url: str) -> None:
-    """Fetch Instagram reel data, transcribe, optionally extract frames, and invoke the analyze-video skill."""
-    data = get_instagram_graphql_data(url)
-
-    if isinstance(data, str):
-        print(f"Error: {data}")
-        sys.exit(1)
-
-    is_video = data.get("is_video", False)
-    if not is_video:
-        print("Error: This script only handles video reels, not image posts/carousels.")
-        print("Use analyze_post.py for image content.")
-        sys.exit(1)
-
+def analyze_video(data: dict) -> None:
+    """Transcribe video, optionally extract frames, and invoke the analyze-video skill."""
     video_url = data.get("video_url")
     if not video_url:
         print("Error: No video URL found in the post data.")
@@ -106,8 +94,5 @@ def analyze_video(url: str) -> None:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python3 analyze_video.py <instagram_reel_url>")
-        sys.exit(1)
-
-    analyze_video(sys.argv[1])
+    print("Use run_analysis.py to analyze Instagram content.")
+    sys.exit(1)

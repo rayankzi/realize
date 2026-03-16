@@ -12,8 +12,9 @@ Read a video transcription and determine whether frame-by-frame visual extractio
 ## How to Use
 
 1. Read the transcription file at the path provided as the argument.
-2. Analyze the transcription against the visual dependency triggers below.
-3. Output your verdict with reasoning.
+2. Read the `captions.txt` file in the same directory as the transcription file.
+3. Analyze the transcription and caption against the visual dependency triggers and caption-heavy content rules below.
+4. Output your verdict with reasoning.
 
 ## Visual Dependency Triggers
 
@@ -65,12 +66,25 @@ Frame-by-frame extraction is likely required when the speaker:
 - "this video", "this clip", "this photo", "this meme"
 - duets, stitches, or reaction-style content where context depends on the original visual
 
+## Caption-Heavy Reels
+
+Some reels exist primarily to direct the viewer to the caption, where the real information lives. In these cases the video itself is visually unimportant (e.g., a talking head saying "check the caption", a generic clip with text overlay pointing to the caption, or background footage with no meaningful visual content).
+
+If the caption contains the vast majority (~90%+) of the detailed, insightful information — and the transcription mainly serves to redirect the viewer to read the caption — then frame-by-frame extraction is **not** needed. The caption already captures the value of the reel.
+
+Signs of a caption-heavy reel:
+- The speaker says things like "read the caption", "check the caption", "all the info is in the caption", "link in caption"
+- The transcription is short or vague while the caption is long and detailed
+- The caption contains lists, steps, resources, or in-depth explanations that the speaker does not cover verbally
+- The video is a generic talking-head or stock clip with no unique visual information
+
 ## When Frame Extraction is NOT Required
 
 - Pure storytelling, opinions, rants, or commentary with no visual references
 - Talking-head content where the speaker fully describes everything verbally
 - Music or audio-only content
 - Voiceover narration that is self-contained and descriptive enough on its own
+- Caption-heavy reels where the caption contains the bulk of the valuable information and the video has no meaningful visual content
 
 ## Output Format
 

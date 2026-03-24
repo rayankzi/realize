@@ -218,3 +218,7 @@ __marimo__/
 # Data
 /data/
 /samples/
+/reference
+
+notion_pages.json
+# notion.json

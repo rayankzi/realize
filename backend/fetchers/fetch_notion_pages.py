@@ -1,13 +1,12 @@
 import os
 import json
-from datetime import datetime, timedelta
 
 import requests
 from dotenv import load_dotenv
 
 
-def fetch_pages_created_yesterday() -> list:
-    """Query a Notion database for all pages created the previous day."""
+def fetch_not_started_pages() -> list:
+    """Query a Notion database for all pages with status 'Not started'."""
     load_dotenv()
 
     notion_api_key = os.getenv("NOTION_INTEGRATION_TOKEN")
@@ -20,8 +19,7 @@ def fetch_pages_created_yesterday() -> list:
         print("Error: NOTION_DATABASE_ID not found in environment.")
         exit(1)
 
-    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
-    print(f"Fetching pages created on {yesterday}...")
+    print("Fetching pages with status 'Not started'...")
 
     url = f"https://api.notion.com/v1/databases/{database_id}/query"
     headers = {
@@ -31,9 +29,9 @@ def fetch_pages_created_yesterday() -> list:
     }
     payload = {
         "filter": {
-            "timestamp": "created_time",
-            "created_time": {
-                "equals": yesterday,
+            "property": "Status",
+            "status": {
+                "equals": "Not started",
             },
         },
     }
@@ -54,22 +52,24 @@ def fetch_pages_created_yesterday() -> list:
         has_more = data.get("has_more", False)
         next_cursor = data.get("next_cursor")
 
-    print(f"Found {len(all_results)} pages created on {yesterday}.")
+    print(f"Found {len(all_results)} pages with status 'Not started'.")
     return all_results
 
 
 def main():
-    pages = fetch_pages_created_yesterday()
+    pages = fetch_not_started_pages()
 
     links = []
+    page_ids = []
     for page in pages:
         url = page.get("properties", {}).get("URL", {}).get("url")
         if url:
             links.append(url)
+            page_ids.append(page["id"])
 
     output_path = os.path.join(os.getcwd(), "notion_pages.json")
     with open(output_path, "w") as f:
-        json.dump({"links": links}, f, indent=2)
+        json.dump({"links": links, "page_ids": page_ids}, f, indent=2)
 
     print(f"Saved {len(links)} links to {output_path}")
 

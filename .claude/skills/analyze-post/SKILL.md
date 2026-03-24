@@ -59,6 +59,14 @@ Act as an expert content analyst and archivist. Analyze the visual content of al
 
 [Describe any important visual cues that add value to the information. Are there charts, diagrams, specific UI elements shown, or before/after visual proof? Summarize what the visuals communicate that the text alone doesn't.]
 
+## Verbatim Templates & Scripts
+
+[If the post contains any reusable templates, scripts, or exact wording meant to be copied — such as cold email templates, networking/outreach messages, DM scripts, follow-up sequences, pitch frameworks, resume bullet formulas, or similar — reproduce them here **exactly as they appear** in the carousel images or caption. Do not paraphrase, summarize, or rephrase these. Use blockquotes or code blocks to clearly distinguish the verbatim content from the rest of the analysis.
+
+If multiple templates or scripts are present, list each one separately with a descriptive label.
+
+If no such templates or scripts are found, omit this section entirely.]
+
 ## Call to Action / Conclusion
 
 [Summarize any final thoughts, tips, or calls to action mentioned in the caption (e.g., "Save this for later," "Check the link in bio," or specific hashtags used that indicate the broader theme).]

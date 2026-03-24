@@ -68,6 +68,14 @@ Use the following Markdown format:
 - **Crucially:** Summarize any important on-screen text (pop-ups, subtitles, code snippets, or ingredients) that appeared in the frames but wasn't spoken out loud.
 - If no frames were extracted, note that this analysis is based on the transcription and caption only.]
 
+## Verbatim Templates & Scripts
+
+[If the video contains any reusable templates, scripts, or exact wording meant to be copied — such as cold email templates, networking/outreach messages, DM scripts, follow-up sequences, pitch frameworks, resume bullet formulas, or similar — reproduce them here **exactly as they appear** in the transcription, on-screen text, or caption. Do not paraphrase, summarize, or rephrase these. Use blockquotes or code blocks to clearly distinguish the verbatim content from the rest of the analysis.
+
+If multiple templates or scripts are present, list each one separately with a descriptive label.
+
+If no such templates or scripts are found, omit this section entirely.]
+
 ## Hook & Call to Action
 
 - **The Hook:** [Identify how the creator grabbed attention in the first 3 seconds—was it a bold statement, a visual transition, or a specific question?]

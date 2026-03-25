@@ -24,6 +24,7 @@ The opening slide features the creator sitting in what appears to be the Tuileri
 
 **Slide 2: The Full Template**
 A complete one-page cover letter template is shown with the following structure:
+
 1. **Header:** Name, email, LinkedIn, phone, city/country, and date
 2. **Addressee:** Department / Team Name, Company Name / University, Relevant Team
 3. **Opening Paragraph:** State the position, how you found it, your current degree/program, a brief description of your relevant project/thesis, and your graduation timeline
@@ -36,7 +37,7 @@ A complete one-page cover letter template is shown with the following structure:
 **Slide 3: Tips on Filling In Your Cover Letter (Steps 1-3)**
 
 1. **Research the Organisation** - Spend time understanding the mission, current projects/reports, and the specific team. Reference a research report, policy initiative, or project aligned with your interests. Avoid generic praise.
-2. **Introduce Your Academic or Professional Focus** - Explain your degree, field, research interests, and current thesis/project. Focus on areas relevant to the role. Example structure: *"I am currently completing a Master's degree in [Field] at [University], where my research focuses on [Topic]."*
+2. **Introduce Your Academic or Professional Focus** - Explain your degree, field, research interests, and current thesis/project. Focus on areas relevant to the role. Example structure: _"I am currently completing a Master's degree in [Field] at [University], where my research focuses on [Topic]."_
 3. **Highlight One Strong Example** - Choose your most relevant experience and describe the context (internship, research project, job), your responsibilities, and the outcome or result. Strong examples include research projects, internships, or leadership roles. Include concrete outcomes like datasets created, reports written, or projects delivered.
 
 **Slide 4: Tips on Filling In Your Cover Letter (Steps 4-5 + Quick Tips)**
@@ -45,6 +46,7 @@ A complete one-page cover letter template is shown with the following structure:
 5. **Conclude with Clear Interest** - Reaffirm interest in the role, mention enthusiasm for the organisation's mission, state availability/expected graduation, and reference attached documents. Close with "Yours sincerely" or "Yours faithfully."
 
 **Quick Tips:**
+
 - Keep the letter to one page
 - Tailor the letter for each organisation
 - Avoid repeating your entire CV
@@ -93,7 +95,7 @@ The first slide uses a lifestyle photo set in a Parisian garden, establishing an
 
 > **Academic Introduction Template (from Slide 3):**
 >
-> *"I am currently completing a Master's degree in [Field] at [University], where my research focuses on [Topic]."*
+> _"I am currently completing a Master's degree in [Field] at [University], where my research focuses on [Topic]."_
 
 ## Call to Action / Conclusion
 

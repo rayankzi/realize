@@ -22,7 +22,7 @@ The creator shares a proven five-part cover letter framework that contributed to
 The creator walks through a five-paragraph cover letter structure:
 
 1. **Introduction Paragraph — Name Drop & Why This Company:** Open by referencing a specific person, event, or connection tied to the company. Explain concisely why you want to work there. This is the most-read sentence of any cover letter.
-2. **Relatability — Cultural Fit:** Show that you understand and align with the company's culture and values. This builds on the introduction but focuses on *you* as a person, not just your interest.
+2. **Relatability — Cultural Fit:** Show that you understand and align with the company's culture and values. This builds on the introduction but focuses on _you_ as a person, not just your interest.
 3. **Motivation — Why You're Applying:** Articulate a genuine, specific reason for applying that goes beyond "I saw the listing." Connect it to your goals, interests, or a particular aspect of the company's work.
 4. **Value Add — What You Bring Beyond Your CV:** Highlight skills, experiences, or perspectives that aren't on your resume, or reframe existing ones to directly address how you'd contribute to the specific role.
 5. **Closing Statement — Professional Sign-Off:** End with a polished closing that leaves a positive final impression, paired with your signature.

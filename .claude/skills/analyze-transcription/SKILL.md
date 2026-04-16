@@ -73,6 +73,7 @@ Some reels exist primarily to direct the viewer to the caption, where the real i
 If the caption contains the vast majority (~90%+) of the detailed, insightful information — and the transcription mainly serves to redirect the viewer to read the caption — then frame-by-frame extraction is **not** needed. The caption already captures the value of the reel.
 
 Signs of a caption-heavy reel:
+
 - The speaker says things like "read the caption", "check the caption", "all the info is in the caption", "link in caption"
 - The transcription is short or vague while the caption is long and detailed
 - The caption contains lists, steps, resources, or in-depth explanations that the speaker does not cover verbally

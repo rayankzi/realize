@@ -54,6 +54,7 @@ def analyze_video(data: dict) -> None:
                 "-p",
                 f"/analyze-transcription {transcription_path}",
                 "--allowedTools", "Read",
+                "--model", "sonnet",
             ],
             capture_output=True,
             text=True,
@@ -88,7 +89,7 @@ def analyze_video(data: dict) -> None:
     abs_dir = os.path.abspath(output_dir)
     print(f"\nInvoking analyze-video skill on {abs_dir}...")
     subprocess.run(
-        ["claude", "-p", f"/analyze-video {abs_dir}", "--allowedTools", "Write,Bash,Read,Glob"],
+        ["claude", "-p", f"/analyze-video {abs_dir}", "--allowedTools", "Write,Bash,Read,Glob", "--model", "sonnet"],
         check=True,
     )
 

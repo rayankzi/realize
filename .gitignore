@@ -220,7 +220,7 @@ __marimo__/
 /samples/
 /reference
 
-notion_pages.json
+# notion_pages.json
 # notion.json
 
 node_modules

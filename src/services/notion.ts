@@ -63,7 +63,9 @@ export async function fetchNotStartedPages(
   return allResults;
 }
 
-export async function writeNotionPagesJson(pages: NotionPage[]): Promise<Job[]> {
+export async function writeNotionPagesJson(
+  pages: NotionPage[],
+): Promise<Job[]> {
   const links: string[] = [];
   const pageIds: string[] = [];
 

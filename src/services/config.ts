@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 
 import { BACKEND_ENV_PATH } from "../lib/constants";
-import type { EnvConfig } from "../types";
+import type { AnalysisEnvConfig, EnvConfig, WorkflowEnvConfig } from "../types";
 
 function parseEnvFile(contents: string): Record<string, string> {
   const env: Record<string, string> = {};
@@ -34,6 +34,35 @@ function parseEnvFile(contents: string): Record<string, string> {
 }
 
 export async function loadEnv(): Promise<EnvConfig> {
+  const env = await loadWorkflowEnv({ requireNotion: true });
+
+  if (!env.notionIntegrationToken) {
+    throw new Error(
+      "NOTION_INTEGRATION_TOKEN not found in backend/.env or process.env.",
+    );
+  }
+  if (!env.notionDatabaseId) {
+    throw new Error(
+      "NOTION_DATABASE_ID not found in backend/.env or process.env.",
+    );
+  }
+
+  return env as EnvConfig;
+}
+
+export async function loadAnalysisEnv(): Promise<AnalysisEnvConfig> {
+  const env = await loadWorkflowEnv({ requireNotion: false });
+
+  return {
+    userAgent: env.userAgent,
+    xIgAppId: env.xIgAppId,
+    lmStudioModelKey: env.lmStudioModelKey,
+  };
+}
+
+export async function loadWorkflowEnv(options?: {
+  requireNotion?: boolean;
+}): Promise<WorkflowEnvConfig> {
   const fileEnv = parseEnvFile(await readFile(BACKEND_ENV_PATH, "utf8"));
   const merged = { ...fileEnv, ...process.env };
 
@@ -43,21 +72,21 @@ export async function loadEnv(): Promise<EnvConfig> {
   const xIgAppId = merged.X_IG_APP_ID;
   const lmStudioModelKey = merged.LMSTUDIO_MODEL_KEY ?? "qwen/qwen3.5-9b";
 
-  if (!notionIntegrationToken) {
-    throw new Error(
-      "NOTION_INTEGRATION_TOKEN not found in backend/.env or process.env.",
-    );
-  }
-  if (!notionDatabaseId) {
-    throw new Error(
-      "NOTION_DATABASE_ID not found in backend/.env or process.env.",
-    );
-  }
   if (!userAgent) {
     throw new Error("USER_AGENT not found in backend/.env or process.env.");
   }
   if (!xIgAppId) {
     throw new Error("X_IG_APP_ID not found in backend/.env or process.env.");
+  }
+  if (options?.requireNotion && !notionIntegrationToken) {
+    throw new Error(
+      "NOTION_INTEGRATION_TOKEN not found in backend/.env or process.env.",
+    );
+  }
+  if (options?.requireNotion && !notionDatabaseId) {
+    throw new Error(
+      "NOTION_DATABASE_ID not found in backend/.env or process.env.",
+    );
   }
 
   return {

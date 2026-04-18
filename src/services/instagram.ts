@@ -3,7 +3,7 @@ import path from "node:path";
 
 import { ensureResponseOk } from "../lib/errors";
 import type {
-  EnvConfig,
+  AnalysisEnvConfig,
   InstagramGraphqlEnvelope,
   InstagramMediaData,
   InstagramSidecarEdge,
@@ -19,7 +19,7 @@ function getInstagramId(url: string): string | null {
 
 export async function getInstagramGraphqlData(
   url: string,
-  env: EnvConfig,
+  env: AnalysisEnvConfig,
 ): Promise<InstagramMediaData> {
   const igId = getInstagramId(url);
   if (!igId) {

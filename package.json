@@ -3,6 +3,10 @@
   "module": "src/index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "test:summarize-only": "bun test --timeout 300000 tests/summarize-only.test.ts",
+    "test:single-workflow": "bun test --timeout 300000 tests/single-workflow.test.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },

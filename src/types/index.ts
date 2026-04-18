@@ -11,6 +11,17 @@ export interface EnvConfig {
   lmStudioModelKey: string;
 }
 
+export interface AnalysisEnvConfig {
+  userAgent: string;
+  xIgAppId: string;
+  lmStudioModelKey: string;
+}
+
+export interface WorkflowEnvConfig extends AnalysisEnvConfig {
+  notionIntegrationToken?: string;
+  notionDatabaseId?: string;
+}
+
 export interface NotionDatabaseQueryResponse {
   results?: NotionPage[];
   has_more?: boolean;
@@ -155,3 +166,10 @@ export interface AgentToolContext {
 }
 
 export type LmStudioModel = Awaited<ReturnType<LMStudioClient["llm"]["model"]>>;
+
+export interface WorkflowRuntimeContext {
+  env: WorkflowEnvConfig;
+  client: LMStudioClient;
+  model: LmStudioModel;
+  prompts: PromptBundle;
+}

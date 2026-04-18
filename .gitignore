@@ -222,3 +222,5 @@ __marimo__/
 
 notion_pages.json
 # notion.json
+
+node_modules

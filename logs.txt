@@ -1,2 +1,5 @@
 {"timestamp":"2026-04-19T20:31:28.017Z","status":"FAILURE","event":"failure","page_id":"local-test-page-id","instagram_url":"https://www.instagram.com/p/DWgogJ6jdz-/","media_type":"Video","workspace_path":"/Users/rayankazi/Developer/projects/realize/data/84e01653-48c3-4b16-9485-36b977329698","step":"analyze_video","error":"EISDIR: illegal operation on a directory, read"}
 {"timestamp":"2026-04-19T20:43:52.085Z","status":"FAILURE","event":"failure","page_id":"local-test-page-id","instagram_url":"https://www.instagram.com/p/DWgogJ6jdz-/","media_type":"Video","workspace_path":"/Users/rayankazi/Developer/projects/realize/data/3ad3ab58-06f6-44c2-a256-3e075faa9fe2","step":"analyze_video","error":"Path is outside allowed roots: /Users/rayankazi/Developer/projects/realize"}
+
+
+gemini -p "Run the __ skill" --yolo --output-format json

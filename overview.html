@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>realize — system overview</title>
+<style>
+  :root{
+    --paper:#f6f3ec;
+    --paper-2:#fbf9f3;
+    --ink:#1c1814;
+    --ink-soft:#5a5249;
+    --ink-faint:#8c8276;
+    --rule:#ddd5c6;
+    --rule-soft:#e8e1d3;
+    --accent:#b9462a;        /* terracotta ink */
+    --accent-soft:#f0dfd6;
+    --teal:#2f6b62;          /* secondary, "done" */
+    --teal-soft:#dde9e5;
+    --gold:#9a7b2e;
+    --shadow:0 1px 0 rgba(28,24,20,.04), 0 10px 30px -18px rgba(28,24,20,.35);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --sans:ui-sans-serif,-apple-system,"Helvetica Neue",Helvetica,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(rgba(28,24,20,.022) 1px,transparent 1px);
+    background-size:4px 4px;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline;text-underline-offset:3px}
+  code,.mono{font-family:var(--mono);font-size:.86em}
+
+  /* ---------- shell ---------- */
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+
+  /* ---------- top nav ---------- */
+  nav.bar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,243,236,.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--rule);
+  }
+  nav.bar .wrap{display:flex;align-items:center;gap:22px;height:54px}
+  nav.bar .brand{font-family:var(--mono);font-weight:600;letter-spacing:.02em;font-size:14px}
+  nav.bar .brand .dot{color:var(--accent)}
+  nav.bar .links{display:flex;gap:18px;margin-left:auto;flex-wrap:wrap}
+  nav.bar .links a{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);
+  }
+  nav.bar .links a:hover{color:var(--accent);text-decoration:none}
+
+  /* ---------- hero ---------- */
+  header.hero{padding:78px 0 56px;border-bottom:1px solid var(--rule)}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:20px;
+  }
+  h1.title{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(48px,9vw,104px);line-height:.95;
+    letter-spacing:-.02em;margin-bottom:22px;
+  }
+  h1.title em{font-style:italic;color:var(--accent)}
+  .lede{
+    font-family:var(--serif);font-size:clamp(19px,2.4vw,25px);
+    color:var(--ink-soft);max-width:680px;line-height:1.5;
+  }
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+  .chip{
+    font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+    padding:6px 12px;border:1px solid var(--rule);border-radius:999px;
+    background:var(--paper-2);color:var(--ink-soft);
+  }
+  .chip b{color:var(--ink);font-weight:600}
+
+  /* ---------- section frame ---------- */
+  section{padding:64px 0;border-bottom:1px solid var(--rule)}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:.1em}
+  h2{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-.01em}
+  .sec-sub{color:var(--ink-soft);max-width:680px;margin:10px 0 38px;font-size:15.5px}
+
+  /* ---------- flow strip ---------- */
+  .flow{
+    display:flex;flex-wrap:wrap;align-items:stretch;gap:0;
+    border:1px solid var(--rule);border-radius:14px;overflow:hidden;
+    background:var(--paper-2);box-shadow:var(--shadow);
+  }
+  .flow .node{
+    flex:1 1 130px;min-width:130px;padding:18px 16px;
+    border-right:1px solid var(--rule-soft);
+    display:flex;flex-direction:column;gap:6px;position:relative;
+  }
+  .flow .node:last-child{border-right:0}
+  .flow .node .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+  .flow .node .v{font-family:var(--mono);font-size:12.5px;color:var(--ink);font-weight:600;word-break:break-word}
+  .flow .node .d{font-size:12px;color:var(--ink-soft);line-height:1.45}
+  .flow .node.src{background:var(--accent-soft)}
+  .flow .node.done{background:var(--teal-soft)}
+  .flow .node .arrow{
+    position:absolute;right:-9px;top:50%;transform:translateY(-50%);
+    z-index:2;color:var(--ink-faint);font-size:14px;background:var(--paper-2);
+    width:18px;text-align:center;
+  }
+  .flow .node.src .arrow,.flow .node.done .arrow{background:transparent}
+
+  /* ---------- stepper ---------- */
+  .steps{display:flex;flex-direction:column;gap:14px}
+  .step{
+    border:1px solid var(--rule);border-radius:14px;background:var(--paper-2);
+    box-shadow:var(--shadow);overflow:hidden;transition:border-color .2s;
+  }
+  .step.open{border-color:var(--accent)}
+  .step > button{
+    width:100%;text-align:left;background:none;border:0;cursor:pointer;
+    display:flex;align-items:center;gap:18px;padding:20px 22px;font:inherit;color:inherit;
+  }
+  .step .idx{
+    flex:0 0 38px;height:38px;border-radius:50%;
+    border:1.5px solid var(--accent);color:var(--accent);
+    font-family:var(--mono);font-weight:700;font-size:15px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .step.open .idx{background:var(--accent);color:var(--paper-2)}
+  .step .st-title{font-family:var(--serif);font-size:20px;font-weight:600;flex:1}
+  .step .st-tag{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.05em}
+  .step .chev{color:var(--ink-faint);transition:transform .25s;font-size:13px}
+  .step.open .chev{transform:rotate(90deg);color:var(--accent)}
+  .step .body{
+    max-height:0;overflow:hidden;transition:max-height .35s ease;
+    border-top:1px solid transparent;
+  }
+  .step.open .body{max-height:1400px;border-top-color:var(--rule-soft)}
+  .step .body-inner{padding:22px 24px 26px 78px}
+  .step p{color:var(--ink-soft);font-size:14.5px;margin-bottom:12px}
+  pre.cmd{
+    background:var(--ink);color:#f0ebe0;font-family:var(--mono);font-size:12.5px;
+    padding:12px 16px;border-radius:9px;overflow-x:auto;margin:10px 0;
+  }
+  pre.cmd .pmt{color:var(--accent)}
+  pre.cmd .cm{color:#9a9081}
+
+  /* branch toggle */
+  .branch{margin-top:18px;border:1px solid var(--rule);border-radius:12px;overflow:hidden}
+  .branch .tabs{display:flex;border-bottom:1px solid var(--rule-soft);background:var(--paper)}
+  .branch .tabs button{
+    flex:1;padding:13px 14px;border:0;background:none;cursor:pointer;
+    font-family:var(--mono);font-size:12px;letter-spacing:.03em;color:var(--ink-soft);
+    border-bottom:2px solid transparent;
+  }
+  .branch .tabs button.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--paper-2)}
+  .branch .pane{display:none;padding:20px 22px}
+  .branch .pane.active{display:block}
+  .branch .pane h4{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px}
+  .dist{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+  .dist .row{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12.5px}
+  .dist .row .n{flex:0 0 78px;color:var(--ink-soft)}
+  .dist .row .bars{display:flex;gap:4px;flex-wrap:wrap}
+  .dist .row .bars span{
+    background:var(--accent-soft);border:1px solid var(--accent);color:var(--accent);
+    border-radius:5px;padding:2px 8px;font-size:11px;font-weight:600;
+  }
+  .seq-list{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .seq-list span{padding:6px 10px;border:1px dashed var(--rule);border-radius:6px}
+
+  /* callouts */
+  .callouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:24px}
+  .callout{border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:8px;padding:14px 16px;background:var(--paper-2)}
+  .callout .ct{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .callout p{font-size:13px;color:var(--ink-soft);margin:0}
+  .callout.warn{border-left-color:var(--gold)}
+  .callout.warn .ct{color:var(--gold)}
+
+  /* ---------- search ---------- */
+  .search-row{display:flex;align-items:center;gap:12px;margin-bottom:28px;flex-wrap:wrap}
+  .search-row input{
+    flex:1;min-width:220px;font-family:var(--mono);font-size:13px;
+    padding:11px 16px;border:1px solid var(--rule);border-radius:9px;
+    background:var(--paper-2);color:var(--ink);
+  }
+  .search-row input:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+  .search-row .count{font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
+
+  /* ---------- file cards ---------- */
+  .dir-group{margin-bottom:34px}
+  .dir-label{
+    display:flex;align-items:center;gap:12px;margin-bottom:16px;
+  }
+  .dir-label .path{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--ink)}
+  .dir-label .path .slash{color:var(--accent)}
+  .dir-label .line{flex:1;height:1px;background:var(--rule)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
+  .card{
+    border:1px solid var(--rule);border-radius:12px;background:var(--paper-2);
+    padding:18px 19px;box-shadow:var(--shadow);transition:transform .15s,border-color .15s;
+  }
+  .card:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .card .fname{font-family:var(--mono);font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:9px;word-break:break-word}
+  .card .role{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:3px 8px;border-radius:5px;margin-bottom:11px}
+  .card p{font-size:13.5px;color:var(--ink-soft);margin-bottom:12px}
+  .io{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);line-height:1.7;border-top:1px dashed var(--rule);padding-top:10px}
+  .io b{color:var(--ink-soft)}
+  .io .ar{color:var(--accent);padding:0 4px}
+  .svc{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .svc span{font-family:var(--mono);font-size:10px;padding:3px 8px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);background:var(--paper)}
+  .hidden{display:none!important}
+  .muted-note{font-size:12.5px;color:var(--ink-faint);font-family:var(--mono);margin-top:14px}
+
+  /* ---------- skills ---------- */
+  .skill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  .skill{border:1px solid var(--rule);border-radius:12px;background:var(--paper-2);padding:18px 19px;box-shadow:var(--shadow)}
+  .skill .sn{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px}
+  .skill .trig{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:11px}
+  .skill p{font-size:13.5px;color:var(--ink-soft)}
+  .skill.global{border-style:dashed;border-color:var(--gold)}
+  .skill.global .sn::after{content:"global";font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);border-radius:5px;padding:2px 6px;margin-left:8px;vertical-align:middle}
+
+  /* ---------- two-flow ---------- */
+  .flows2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .flowcard{border:1px solid var(--rule);border-radius:14px;background:var(--paper-2);padding:24px;box-shadow:var(--shadow)}
+  .flowcard h3{font-family:var(--serif);font-size:21px;margin-bottom:6px}
+  .flowcard .tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:block}
+  .flowcard ol{margin-left:18px;color:var(--ink-soft);font-size:14px}
+  .flowcard ol li{margin-bottom:9px;padding-left:4px}
+  .flowcard ol li code{background:var(--paper);padding:1px 5px;border-radius:4px;border:1px solid var(--rule-soft)}
+
+  /* ---------- footer ---------- */
+  footer{padding:48px 0 64px;color:var(--ink-faint)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:12px}
+
+  @media(max-width:760px){
+    .flows2{grid-template-columns:1fr}
+    .step .body-inner{padding:20px 22px 24px 22px}
+    nav.bar .links{display:none}
+    .flow .node .arrow{display:none}
+  }
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="wrap">
+    <span class="brand">realize<span class="dot">.</span></span>
+    <div class="links">
+      <a href="#arch">Architecture</a>
+      <a href="#workflow">Scheduled Task</a>
+      <a href="#backend">Backend</a>
+      <a href="#config">.claude</a>
+      <a href="#skills">Skills</a>
+      <a href="#flows">Workflows</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">System Overview · Documentation Snapshot</div>
+    <h1 class="title">realize<em>.</em></h1>
+    <p class="lede">An automated pipeline that pulls Instagram links from Notion, transcribes &amp; analyzes each reel or carousel with Claude skills, files the results into a topic-organized knowledge base, and marks the source pages done.</p>
+    <div class="legend">
+      <span class="chip"><b>Instagram</b> GraphQL API</span>
+      <span class="chip"><b>Notion</b> REST API</span>
+      <span class="chip"><b>mlx-whisper</b> transcription</span>
+      <span class="chip"><b>ffmpeg</b> frame extraction</span>
+      <span class="chip"><b>Claude CLI</b> analysis skills</span>
+    </div>
+  </div>
+</header>
+
+<!-- ARCHITECTURE -->
+<section id="arch">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Architecture at a glance</h2></div>
+    <p class="sec-sub">A single URL — or a whole batch from Notion — flows left to right through fetch, branch-by-media-type, analyze, organize, and close-out.</p>
+    <div class="flow">
+      <div class="node src"><span class="k">Source</span><span class="v">Notion DB</span><span class="d">pages with status “Not started”</span><span class="arrow">→</span></div>
+      <div class="node"><span class="k">Fetch</span><span class="v">fetch_notion_pages.py</span><span class="d">writes notion_pages.json</span><span class="arrow">→</span></div>
+      <div class="node"><span class="k">Route</span><span class="v">run_analysis.py</span><span class="d">video? → reel · else → carousel</span><span class="arrow">→</span></div>
+      <div class="node"><span class="k">Analyze</span><span class="v">analyze_video / analyze_post</span><span class="d">Claude skills → output/*.md</span><span class="arrow">→</span></div>
+      <div class="node"><span class="k">Organize</span><span class="v">organize-output</span><span class="d">→ organized-output/{topic}/</span><span class="arrow">→</span></div>
+      <div class="node done"><span class="k">Close-out</span><span class="v">cleanup.py</span><span class="d">mark Notion “Done”, wipe temp</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section id="workflow">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2>The scheduled automation task</h2></div>
+    <p class="sec-sub">The seven steps the recurring Claude automation runs end to end. Click any step to expand it.</p>
+    <div class="steps" id="steps"></div>
+
+    <div class="callouts">
+      <div class="callout"><div class="ct">Links only</div><p>Read <code>links</code> from notion_pages.json. <b>Ignore <code>page_ids</code> entirely</b> during analysis.</p></div>
+      <div class="callout"><div class="ct">Launch in parallel</div><p>When batching, fire <b>all</b> subagents at once via the Task tool — never one at a time.</p></div>
+      <div class="callout"><div class="ct">Always close out</div><p>Run organize-output only after every URL finishes; always run cleanup last, even on failure.</p></div>
+      <div class="callout warn"><div class="ct">Hands off the source</div><p>Don’t modify source files, debug scripts, or touch the venv. Record errors and move on.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BACKEND -->
+<section id="backend">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Inside <span class="mono">backend/</span></h2></div>
+    <p class="sec-sub">Every Python module, grouped by directory, with what it consumes and produces.</p>
+    <div class="search-row">
+      <input id="filter" type="text" placeholder="filter files & skills…  (e.g. notion, frames, cleanup)">
+      <span class="count" id="fcount"></span>
+    </div>
+    <div id="dirs"></div>
+    <p class="muted-note">Also present: empty <code>__init__.py</code> package markers in each subpackage · <code>venv/</code> (Python virtualenv) · <code>__pycache__/</code> (bytecode cache) · <code>.env</code> (secrets — Notion token, database id, Instagram headers; never printed).</p>
+  </div>
+</section>
+
+<!-- CONFIG -->
+<section id="config">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2><span class="mono">.claude/</span> configuration</h2></div>
+    <p class="sec-sub">Project-scoped Claude Code config. One file plus the skills library.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="fname">.claude/settings.local.json</div>
+        <span class="role">permission allowlist</span>
+        <p>A single <code>permissions.allow</code> array — no hooks, no env, <b>no secrets</b>. It pre-approves exactly the commands the automation needs so it can run unattended.</p>
+        <div class="io">
+          <b>Allows</b> shell tools (<span class="mono">python3, ls, find, cat, source venv, ffmpeg, brew, npm/npx, tree</span>),
+          the <span class="mono">claude -p "/organize-output"</span> skill invocation, <span class="mono">WebSearch</span>,
+          and scoped <span class="mono">Read</span> paths (Homebrew, npm, claude local, task tmp dirs).
+        </div>
+      </div>
+      <div class="card">
+        <div class="fname">.claude/skills/</div>
+        <span class="role">skills library</span>
+        <p>Six project-scoped skills that do the actual content analysis and organization — detailed in the next section. Per project policy, new skills live here unless asked otherwise.</p>
+        <div class="io"><b>Contains</b> <span class="ar">→</span> analyze-transcription · analyze-frames · analyze-video · analyze-post · organize-output · test-print</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Skills catalog</h2></div>
+    <p class="sec-sub">Six project skills power the pipeline. <code>graphify</code> is a global user skill (in <span class="mono">~/.claude/skills/</span>), not part of this project.</p>
+    <div class="skill-grid" id="skillgrid"></div>
+  </div>
+</section>
+
+<!-- FLOWS -->
+<section id="flows">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Primary workflows</h2></div>
+    <p class="sec-sub">Two ways the system runs: the unattended batch automation, and a single ad-hoc analysis.</p>
+    <div class="flows2">
+      <div class="flowcard">
+        <h3>A · Scheduled batch automation</h3>
+        <span class="tag">recurring · unattended</span>
+        <ol>
+          <li>Activate the venv (and all subagents do too).</li>
+          <li>Run <code>fetch_notion_pages.py</code> → <code>notion_pages.json</code>.</li>
+          <li>Read <code>links</code>; stop if empty.</li>
+          <li>&lt;6 URLs → sequential; ≥6 → up to 6 parallel subagents, each running <code>run_analysis.py</code> per URL.</li>
+          <li>Invoke <code>/organize-output</code> via headless Claude CLI.</li>
+          <li>Run <code>cleanup.py</code> — mark pages Done, wipe temp.</li>
+          <li>Emit a success/failure summary report.</li>
+        </ol>
+      </div>
+      <div class="flowcard">
+        <h3>B · Single ad-hoc run</h3>
+        <span class="tag">manual · one URL</span>
+        <ol>
+          <li><code>python3 backend/run_analysis.py &lt;instagram_url&gt;</code></li>
+          <li><code>get_instagram_graphql_data()</code> fetches metadata + media.</li>
+          <li>Has a <code>video_url</code>? → <b>reel path</b>: download → transcribe → (decide → extract → filter frames) → <code>/analyze-video</code>.</li>
+          <li>No video? → <b>carousel path</b>: download images + caption → <code>/analyze-post</code>.</li>
+          <li>Markdown summary lands in <code>output/</code>; run <code>/organize-output</code> + <code>cleanup.py</code> to file &amp; close it.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>realize — system overview · static snapshot</span>
+    <span>generated 2026-05-17 · reflects source at time of writing</span>
+  </div>
+</footer>
+
+<script>
+/* ---------------- data ---------------- */
+const STEPS = [
+  { t:"Activate the virtual environment", tag:"env · subagents too",
+    p:"Every process — the main run and every subagent — must source the project venv first so dependencies resolve.",
+    cmd:`<span class="pmt">$</span> source backend/venv/bin/activate` },
+  { t:"Fetch Notion pages", tag:"fetchers/fetch_notion_pages.py",
+    p:"Query the Notion database for pages whose status is “Not started”, paginating through all results, and write them to notion_pages.json in the project root.",
+    cmd:`<span class="pmt">$</span> python3 backend/fetchers/fetch_notion_pages.py\n<span class="cm"># → notion_pages.json  {"links":[...], "page_ids":[...]}</span>` },
+  { t:"Check for work", tag:"read notion_pages.json",
+    p:"Read the file. Use only the links field — ignore page_ids entirely. If links is empty, missing, or [], stop here and do nothing further.",
+    cmd:null },
+  { t:"Run analysis", tag:"sequential or parallel", branch:true,
+    p:"Extract every URL from links, then choose an execution strategy by count. Failures are recorded (URL, exit code, stderr) and skipped — never block the batch.",
+    cmd:`<span class="pmt">$</span> python3 backend/run_analysis.py &lt;url&gt;` },
+  { t:"Organize output", tag:"headless Claude CLI",
+    p:"After all analyses finish, fold the freshly written output/*.md summaries into the topic-categorized organized-output/ tree. If this step fails, record it and continue to cleanup.",
+    cmd:`<span class="pmt">$</span> claude -p "/organize-output" \\\\\n    --allowedTools Write,Bash,Read,Glob` },
+  { t:"Cleanup", tag:"always runs last",
+    p:"Mark every processed Notion page as “Done”, then delete the temporary data/ directory and notion_pages.json. Runs even if earlier steps failed.",
+    cmd:`<span class="pmt">$</span> python3 backend/cleanup.py\n<span class="cm"># cleanup.py lives at backend/utils/cleanup.py</span>` },
+  { t:"Summary report", tag:"final accounting",
+    p:"Report totals: URLs processed, succeeded, failed; whether subagents were used and the batch split; each failure’s URL + exit code + traceback; and whether organize-output succeeded.",
+    cmd:null },
+];
+
+const DIRS = [
+  { dir:"backend/", files:[
+    { f:"run_analysis.py", role:"entry point · router",
+      d:"CLI entry. Takes an Instagram URL, calls get_instagram_graphql_data(), then routes: if the data has a video_url → analyze_video(), otherwise → analyze_post().",
+      io:["URL arg","analyze_video() / analyze_post()"], svc:[] },
+  ]},
+  { dir:"backend/fetchers/", files:[
+    { f:"get_instagram_data.py", role:"instagram fetch + media",
+      d:"Hits Instagram’s private GraphQL API to pull post metadata (caption, video URL, carousel images, dimensions). Also exposes download_video() and download_carousel_images().",
+      io:["Instagram URL","metadata dict · media files"], svc:["Instagram GraphQL"] },
+    { f:"fetch_notion_pages.py", role:"notion → json",
+      d:"Queries the Notion database filtered to Status = “Not started”, paginates through all results, and writes {links, page_ids} to notion_pages.json in the cwd.",
+      io:["NOTION_* env","notion_pages.json"], svc:["Notion API"] },
+  ]},
+  { dir:"backend/processing/", files:[
+    { f:"transcribe_video.py", role:"speech → text",
+      d:"Transcribes a video with mlx-whisper using the whisper-large-v3-turbo model and saves the text next to the video as transcription.txt.",
+      io:["video path","transcription.txt"], svc:["mlx-whisper"] },
+    { f:"extract_frames.py", role:"video → frames",
+      d:"Uses ffmpeg to sample frames at 1 fps into a frames/ directory as frame_0001.jpg, frame_0002.jpg, … and reports the count.",
+      io:["video path","frames/frame_NNNN.jpg"], svc:["ffmpeg"] },
+  ]},
+  { dir:"backend/analysis/", files:[
+    { f:"analyze_video.py", role:"reel path",
+      d:"Creates data/{uuid}/, saves the caption, downloads & transcribes the video. If the transcription is empty or /analyze-transcription returns YES, it extracts frames and filters them via /analyze-frames, then invokes /analyze-video.",
+      io:["video metadata dict","data/{uuid}/ · invokes 3 skills"], svc:["Claude CLI","ffmpeg","mlx-whisper"] },
+    { f:"analyze_post.py", role:"carousel path",
+      d:"Creates data/{uuid}/, saves the caption, downloads all carousel images, then invokes the /analyze-post skill on the directory.",
+      io:["post metadata dict","data/{uuid}/ · invokes /analyze-post"], svc:["Claude CLI","Instagram"] },
+  ]},
+  { dir:"backend/utils/", files:[
+    { f:"cleanup.py", role:"close-out",
+      d:"Reads notion_pages.json from the project root, PATCHes each page_id to status “Done” via the Notion API, then deletes the data/ directory and notion_pages.json.",
+      io:["notion_pages.json","Notion pages → Done · temp wiped"], svc:["Notion API"] },
+  ]},
+];
+
+const SKILLS = [
+  { n:"analyze-transcription", trig:"/analyze-transcription <transcription.txt>",
+    d:"Reads a reel’s transcription + caption and decides whether the video needs frame-by-frame visual analysis. Returns a single YES / NO verdict that gates frame extraction." },
+  { n:"analyze-frames", trig:"/analyze-frames <uuid dir>",
+    d:"Walks the extracted frames/ directory and deletes redundant, empty, or low-value frames — keeping only ones with meaningful content (code, diagrams, text, charts, UI)." },
+  { n:"analyze-video", trig:"/analyze-video <uuid dir>",
+    d:"Synthesizes the reel’s transcription, caption, and kept frames into a structured markdown writeup (summary, insights, breakdown, templates, hook/CTA) saved to output/." },
+  { n:"analyze-post", trig:"/analyze-post <uuid dir>",
+    d:"Reads all carousel images + caption and produces the same structured markdown analysis, saved to output/ with a descriptive kebab-case filename." },
+  { n:"organize-output", trig:"/organize-output",
+    d:"Sorts the loose markdown files in output/ into a topic-categorized organized-output/ tree using parallel subagents — building the structure on first run, integrating into it after." },
+  { n:"test-print", trig:"/test-print",
+    d:"A trivial diagnostic skill that prints a confirmation message to verify the skill system is wired up correctly." },
+  { n:"graphify", trig:"/graphify", global:true,
+    d:"Global user skill (not in this project): turns arbitrary input into a clustered knowledge graph. Listed for completeness — it is not part of the realize pipeline." },
+];
+
+/* ---------------- render: steps ---------------- */
+const branchHTML = `
+<div class="branch">
+  <div class="tabs">
+    <button class="active" data-pane="seq">&lt; 6 URLs · sequential</button>
+    <button data-pane="par">≥ 6 URLs · parallel subagents</button>
+  </div>
+  <div class="pane active" data-pane="seq">
+    <h4>One at a time</h4>
+    <p style="color:var(--ink-soft);font-size:14px;margin:0 0 4px">Run each URL through run_analysis.py in order. On failure, record URL + error + stderr and continue.</p>
+    <div class="seq-list">
+      <span>url 1  →  run_analysis.py</span>
+      <span>url 2  →  run_analysis.py</span>
+      <span>url 3  →  run_analysis.py …</span>
+    </div>
+  </div>
+  <div class="pane" data-pane="par">
+    <h4>Up to 6 subagents, launched simultaneously</h4>
+    <p style="color:var(--ink-soft);font-size:14px;margin:0 0 4px">6 subagents (or ceil(n/2) when n &lt; 12, so each gets ≥ 2). Distribute as evenly as possible; wait for all, then merge results.</p>
+    <div class="dist">
+      <div class="row"><span class="n">36 URLs</span><div class="bars"><span>6</span><span>6</span><span>6</span><span>6</span><span>6</span><span>6</span></div></div>
+      <div class="row"><span class="n">23 URLs</span><div class="bars"><span>4</span><span>4</span><span>4</span><span>4</span><span>4</span><span>3</span></div></div>
+      <div class="row"><span class="n">50 URLs</span><div class="bars"><span>9</span><span>9</span><span>8</span><span>8</span><span>8</span><span>8</span></div></div>
+      <div class="row"><span class="n">8 URLs</span><div class="bars"><span>2</span><span>2</span><span>2</span><span>2</span></div></div>
+    </div>
+  </div>
+</div>`;
+
+const stepsEl = document.getElementById('steps');
+STEPS.forEach((s,i)=>{
+  const el = document.createElement('div');
+  el.className = 'step';
+  el.innerHTML = `
+    <button aria-expanded="false">
+      <span class="idx">${i+1}</span>
+      <span class="st-title">${s.t}</span>
+      <span class="st-tag">${s.tag}</span>
+      <span class="chev">▶</span>
+    </button>
+    <div class="body"><div class="body-inner">
+      <p>${s.p}</p>
+      ${s.cmd?`<pre class="cmd">${s.cmd}</pre>`:''}
+      ${s.branch?branchHTML:''}
+    </div></div>`;
+  const btn = el.querySelector('button');
+  btn.addEventListener('click',()=>{
+    const open = el.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  stepsEl.appendChild(el);
+});
+// open step 1 by default
+stepsEl.querySelector('.step').classList.add('open');
+stepsEl.querySelector('.step button').setAttribute('aria-expanded','true');
+
+// branch tab switching (delegated)
+stepsEl.addEventListener('click',e=>{
+  const b = e.target.closest('.branch .tabs button');
+  if(!b) return;
+  const branch = b.closest('.branch');
+  branch.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));
+  branch.querySelectorAll('.pane').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  branch.querySelector(`.pane[data-pane="${b.dataset.pane}"]`).classList.add('active');
+});
+
+/* ---------------- render: dirs ---------------- */
+const dirsEl = document.getElementById('dirs');
+DIRS.forEach(g=>{
+  const grp = document.createElement('div');
+  grp.className = 'dir-group';
+  const seg = g.dir.replace(/\/$/,'').split('/');
+  const pretty = seg.map((s,i)=> i? `<span class="slash">/</span>${s}` : s).join('') + '<span class="slash">/</span>';
+  grp.innerHTML = `<div class="dir-label"><span class="path">${pretty}</span><span class="line"></span></div><div class="grid"></div>`;
+  const grid = grp.querySelector('.grid');
+  g.files.forEach(f=>{
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.dataset.search = (f.f + ' ' + f.role + ' ' + f.d + ' ' + g.dir).toLowerCase();
+    c.innerHTML = `
+      <div class="fname">${f.f}</div>
+      <span class="role">${f.role}</span>
+      <p>${f.d}</p>
+      <div class="io"><b>in</b> ${f.io[0]} <span class="ar">→</span> <b>out</b> ${f.io[1]}</div>
+      ${f.svc.length?`<div class="svc">${f.svc.map(s=>`<span>${s}</span>`).join('')}</div>`:''}`;
+    grid.appendChild(c);
+  });
+  dirsEl.appendChild(grp);
+});
+
+/* ---------------- render: skills ---------------- */
+const sg = document.getElementById('skillgrid');
+SKILLS.forEach(s=>{
+  const el = document.createElement('div');
+  el.className = 'skill' + (s.global?' global':'');
+  el.dataset.search = (s.n + ' ' + s.d + ' skill').toLowerCase();
+  el.innerHTML = `<div class="sn">${s.n}</div><div class="trig">${s.trig}</div><p>${s.d}</p>`;
+  sg.appendChild(el);
+});
+
+/* ---------------- search ---------------- */
+const filter = document.getElementById('filter');
+const fcount = document.getElementById('fcount');
+const searchables = [...document.querySelectorAll('[data-search]')];
+function applyFilter(){
+  const q = filter.value.trim().toLowerCase();
+  let shown = 0;
+  searchables.forEach(el=>{
+    const hit = !q || el.dataset.search.includes(q);
+    el.classList.toggle('hidden', !hit);
+    if(hit) shown++;
+  });
+  // hide empty dir groups
+  document.querySelectorAll('.dir-group').forEach(g=>{
+    const any = [...g.querySelectorAll('.card')].some(c=>!c.classList.contains('hidden'));
+    g.classList.toggle('hidden', !any);
+  });
+  fcount.textContent = q ? `${shown} match${shown===1?'':'es'}` : `${searchables.length} files & skills`;
+}
+filter.addEventListener('input', applyFilter);
+applyFilter();
+</script>
+</body>
+</html>

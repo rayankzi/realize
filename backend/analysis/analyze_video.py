@@ -2,6 +2,7 @@ import os
 import sys
 import uuid
 import subprocess
+import json
 
 from fetchers.get_instagram_data import download_video
 from processing.transcribe_video import transcribe_and_save
@@ -50,16 +51,16 @@ def analyze_video(data: dict) -> None:
         print("Checking transcription for visual dependency cues...")
         result = subprocess.run(
             [
-                "claude",
+                "gemini",
                 "-p",
-                f"/analyze-transcription {transcription_path}",
-                "--allowedTools", "Read",
-                "--model", "sonnet",
+                f"Run the analyze-transcription skill with the directory {transcription_path}",
+                "--yolo",
+                "--output-format", "json",
             ],
             capture_output=True,
             text=True,
         )
-        response = result.stdout
+        response = json.loads(result.stdout)["response"]
         print(response)
 
         if "YES" in response:
@@ -77,10 +78,10 @@ def analyze_video(data: dict) -> None:
         print("Filtering frames for visual relevance...")
         subprocess.run(
             [
-                "claude",
-                "-p", f"/analyze-frames {os.path.abspath(output_dir)}",
-                "--allowedTools", "Read,Glob,Bash",
-                "--model", "sonnet",
+                "gemini",
+                "-p", f"Run the analyze-frames skill with the directory {os.path.abspath(output_dir)}",
+                "--yolo",
+                "--output-format", "json",
             ],
             check=True,
         )
@@ -89,7 +90,7 @@ def analyze_video(data: dict) -> None:
     abs_dir = os.path.abspath(output_dir)
     print(f"\nInvoking analyze-video skill on {abs_dir}...")
     subprocess.run(
-        ["claude", "-p", f"/analyze-video {abs_dir}", "--allowedTools", "Write,Bash,Read,Glob", "--model", "sonnet"],
+        ["gemini", "-p", f"Run the analyze-video skill with the directory {abs_dir}", "--yolo", "--output-format", "json"],
         check=True,
     )
 

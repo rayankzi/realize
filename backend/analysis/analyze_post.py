@@ -29,7 +29,7 @@ def analyze_post(data: dict) -> None:
     abs_dir = os.path.abspath(output_dir)
     print(f"\nInvoking analyze-post skill on {abs_dir}...")
     subprocess.run(
-        ["claude", "-p", f"/analyze-post {abs_dir}", "--allowedTools", "Write,Bash,Read,Glob", "--model", "sonnet"],
+        ["gemini", "-p", f"Run the analyze-post skill with the directory {abs_dir}", "--yolo", "--output-format", "json"],
         check=True,
     )
 

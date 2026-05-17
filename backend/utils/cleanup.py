@@ -30,11 +30,15 @@ def mark_pages_done(page_ids: list) -> None:
         },
     }
 
+    count = 0
     for page_id in page_ids:
         url = f"https://api.notion.com/v1/pages/{page_id}"
         response = requests.patch(url, headers=headers, json=payload)
         response.raise_for_status()
         print(f"Marked page {page_id} as Done.")
+        count += 1
+        if (count == 80):
+            break
 
 
 def main():

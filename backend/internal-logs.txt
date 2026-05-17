@@ -1,0 +1,303 @@
+Batch Notion Pages Analysis
+Started At: 2026-05-17T14:54:13
+Total Links: 93
+Notion Pages File: /Users/rayankazi/Developer/projects/realize/notion_pages.json
+Analysis Script: /Users/rayankazi/Developer/projects/realize/backend/run_analysis.py
+================================================================================
+
+================================================================================
+Run: 1/93
+Timestamp: 2026-05-17T14:54:13
+URL: https://www.instagram.com/reel/DXKy2O-jCGs/?igsh=MWswNW14ejBwMzBudw==
+Command: python3 /Users/rayankazi/Developer/projects/realize/backend/run_analysis.py https://www.instagram.com/reel/DXKy2O-jCGs/?igsh=MWswNW14ejBwMzBudw==
+Duration Seconds: 93.65
+Exit Code: 0
+--------------------------------------------------------------------------------
+STDOUT:
+Detected video reel.
+Created directory: /Users/rayankazi/Developer/projects/realize/data/ebc2bdfb-71d6-41e2-8acf-1bbd24ec8572
+Caption saved to /Users/rayankazi/Developer/projects/realize/data/ebc2bdfb-71d6-41e2-8acf-1bbd24ec8572/captions.txt
+Downloading video to /Users/rayankazi/Developer/projects/realize/data/ebc2bdfb-71d6-41e2-8acf-1bbd24ec8572/video.mp4...
+Video saved to /Users/rayankazi/Developer/projects/realize/data/ebc2bdfb-71d6-41e2-8acf-1bbd24ec8572/video.mp4
+Transcribing /Users/rayankazi/Developer/projects/realize/data/ebc2bdfb-71d6-41e2-8acf-1bbd24ec8572/video.mp4...
+{
+  "session_id": "68a7360d-7b33-4b53-9c39-a50b3fccc305",
+  "response": "I have completed the analysis for the provided video directory. Since there were no extracted frames, the analysis was based exclusively on the transcription and caption content.\n\nThe finalized analysis document has been successfully generated and saved to:\n`/Users/rayankazi/Developer/projects/realize/output/building-apis-for-agents.md`",
+  "stats": {
+    "models": {
+      "gemini-3.1-pro-preview": {
+        "api": {
+          "totalRequests": 6,
+          "totalErrors": 0,
+          "totalLatencyMs": 44105
+        },
+        "tokens": {
+          "input": 27437,
+          "prompt": 96498,
+          "candidates": 1120,
+          "total": 100278,
+          "cached": 69061,
+          "thoughts": 2660,
+          "tool": 0
+        },
+        "roles": {
+          "main": {
+            "totalRequests": 6,
+            "totalErrors": 0,
+            "totalLatencyMs": 44105,
+            "tokens": {
+              "input": 27437,
+              "prompt": 96498,
+              "candidates": 1120,
+              "total": 100278,
+              "cached": 69061,
+              "thoughts": 2660,
+              "tool": 0
+            }
+          }
+        }
+      }
+    },
+    "tools": {
+      "totalCalls": 8,
+      "totalSuccess": 6,
+      "totalFail": 2,
+      "totalDurationMs": 177,
+      "totalDecisions": {
+        "accept": 6,
+        "reject": 0,
+        "modify": 0,
+        "auto_accept": 0
+      },
+      "byName": {
+        "activate_skill": {
+          "count": 1,
+          "success": 1,
+          "fail": 0,
+          "durationMs": 11,
+          "decisions": {
+            "accept": 1,
+            "reject": 0,
+            "modify": 0,
+            "auto_accept": 0
+          }
+        },
+        "read_file": {
+          "count": 2,
+          "success": 0,
+          "fail": 2,
+          "durationMs": 0,
+          "decisions": {
+            "accept": 0,
+            "reject": 0,
+            "modify": 0,
+            "auto_accept": 0
+          }
+        },
+        "glob": {
+          "count": 1,
+          "success": 1,
+          "fail": 0,
+          "durationMs": 9,
+          "decisions": {
+            "accept": 1,
+            "reject": 0,
+            "modify": 0,
+            "auto_accept": 0
+          }
+        },
+        "run_shell_command": {
+          "count": 3,
+          "success": 3,
+          "fail": 0,
+          "durationMs": 146,
+          "decisions": {
+            "accept": 3,
+            "reject": 0,
+            "modify": 0,
+            "auto_accept": 0
+          }
+        },
+        "write_file": {
+          "count": 1,
+          "success": 1,
+          "fail": 0,
+          "durationMs": 11,
+          "decisions": {
+            "accept": 1,
+            "reject": 0,
+            "modify": 0,
+            "auto_accept": 0
+          }
+        }
+      }
+    },
+    "files": {
+      "totalLinesAdded": 38,
+      "totalLinesRemoved": 0
+    }
+  }
+}Transcription text saved to /Users/rayankazi/Developer/projects/realize/data/ebc2bdfb-71d6-41e2-8acf-1bbd24ec8572/transcription.txt
+Checking transcription for visual dependency cues...
+The transcription provides a conceptual discussion consisting of three verbal tips for building APIs for agents. There are no visual dependency triggers—the speaker does not reference on-screen content, demonstrate any actions, or refer to text overlays. The transcription is self-contained and fully descriptive on its own as a talking-head style video.
+
+Verdict: Frame-by-frame extraction is not required. NO
+No visual dependency detected. Skipping frame extraction.
+
+Invoking analyze-video skill on /Users/rayankazi/Developer/projects/realize/data/ebc2bdfb-71d6-41e2-8acf-1bbd24ec8572...
+--------------------------------------------------------------------------------
+STDERR:
+
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]
+Fetching 4 files: 100%|██████████| 4/4 [00:00<00:00, 20841.26it/s]
+YOLO mode is enabled. All tool calls will be automatically approved.
+Keychain initialization encountered an error: Cannot find module '../build/Release/keytar.node'
+Require stack:
+- /opt/homebrew/Cellar/gemini-cli/0.36.0/libexec/lib/node_modules/@google/gemini-cli/node_modules/keytar/lib/keytar.js
+Using FileKeychain fallback for secure storage.
+Loaded cached credentials.
+YOLO mode is enabled. All tool calls will be automatically approved.
+Loading extension: superpowers
+Scheduling MCP context refresh...
+Executing MCP context refresh...
+MCP context refresh complete.
+Error executing tool read_file: File path '/Users/rayankazi/Developer/projects/realize/data/ebc2bdfb-71d6-41e2-8acf-1bbd24ec8572/transcription.txt' is ignored by configured ignore patterns.
+Error executing tool read_file: File path '/Users/rayankazi/Developer/projects/realize/data/ebc2bdfb-71d6-41e2-8acf-1bbd24ec8572/captions.txt' is ignored by configured ignore patterns.
+================================================================================
+
+================================================================================
+Run: 2/93
+Timestamp: 2026-05-17T14:55:46
+URL: https://www.instagram.com/reel/DXfx6s6AHwC/?igsh=MWswZnowa3Q0Z2thMw==
+Command: python3 /Users/rayankazi/Developer/projects/realize/backend/run_analysis.py https://www.instagram.com/reel/DXfx6s6AHwC/?igsh=MWswZnowa3Q0Z2thMw==
+Duration Seconds: 1.09
+Exit Code: 1
+--------------------------------------------------------------------------------
+STDOUT:
+(empty)
+--------------------------------------------------------------------------------
+STDERR:
+Traceback (most recent call last):
+  File "/Users/rayankazi/Developer/projects/realize/backend/run_analysis.py", line 32, in <module>
+    main()
+    ~~~~^^
+  File "/Users/rayankazi/Developer/projects/realize/backend/run_analysis.py", line 17, in main
+    data = get_instagram_graphql_data(url)
+  File "/Users/rayankazi/Developer/projects/realize/backend/fetchers/get_instagram_data.py", line 54, in get_instagram_graphql_data
+    caption_edges = items.get("edge_media_to_caption", {}).get("edges", [])
+                    ^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+================================================================================
+
+================================================================================
+Run: 3/93
+Timestamp: 2026-05-17T14:55:48
+URL: https://www.instagram.com/reel/DUpBnfIDsP4/?igsh=MXE0MDN2Z2cxZXI1Ng==
+Command: python3 /Users/rayankazi/Developer/projects/realize/backend/run_analysis.py https://www.instagram.com/reel/DUpBnfIDsP4/?igsh=MXE0MDN2Z2cxZXI1Ng==
+Duration Seconds: 1.43
+Exit Code: 1
+--------------------------------------------------------------------------------
+STDOUT:
+Detected video reel.
+Created directory: /Users/rayankazi/Developer/projects/realize/data/c7f46549-a203-4621-8982-e46bd4c2d06b
+Caption saved to /Users/rayankazi/Developer/projects/realize/data/c7f46549-a203-4621-8982-e46bd4c2d06b/captions.txt
+Downloading video to /Users/rayankazi/Developer/projects/realize/data/c7f46549-a203-4621-8982-e46bd4c2d06b/video.mp4...
+--------------------------------------------------------------------------------
+STDERR:
+Traceback (most recent call last):
+  File "/Users/rayankazi/Developer/projects/realize/backend/run_analysis.py", line 32, in <module>
+    main()
+    ~~~~^^
+  File "/Users/rayankazi/Developer/projects/realize/backend/run_analysis.py", line 25, in main
+    analyze_video(data)
+    ~~~~~~~~~~~~~^^^^^^
+  File "/Users/rayankazi/Developer/projects/realize/backend/analysis/analyze_video.py", line 34, in analyze_video
+    video_path = download_video(video_url, output_dir)
+  File "/Users/rayankazi/Developer/projects/realize/backend/fetchers/get_instagram_data.py", line 87, in download_video
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/rayankazi/Developer/projects/realize/backend/venv/lib/python3.13/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://scontent-phx1-1.cdninstagram.com/o1/v/t16/f2/m86/AQO8Eu-OeBkHw0i5e_yIDZIsEVCvEqbdzeYiBeFyOMX2UO5JoAiNI16YMHA-NekvtO0ic-1eGE4MDHTYhqdIk2xEwR7v9AFE9YXz2Vs.mp4?stp=dst-mp4&efg=eyJxZV9ncm91cHMiOiJbXCJpZ193ZWJfZGVsaXZlcnlfdnRzX290ZlwiXSIsInZlbmNvZGVfdGFnIjoidnRzX3ZvZF91cmxnZW4uY2xpcHMuYzIuNzIwLmJhc2VsaW5lIn0&_nc_cat=106&vs=1472224844334649_2924302601&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9FQzRDQjMxRUI5NDEwOTBFMzFGRThERDIwRDM5MDE5Ql92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzEzNDZERUI4RjQyNDVGNjU5MThDN0FEOURGRTFFNUI4X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwAVAAAmkJXE3uPRtj8VAigCQzMsF0BSiIMSbpeNGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX%2BB2WWqQEA&_nc_rid=95ac961296&ccb=9-4&oh=00_Af4oizi5_R4q3SgHRNFVQzBa3Q5lc934-S8bXbacu1NYnw&oe=6A0C2667&_nc_sid=10d13b
+================================================================================
+
+================================================================================
+Run: 4/93
+Timestamp: 2026-05-17T14:55:49
+URL: https://www.instagram.com/reel/DXiF1eBDEje/?igsh=ZnMwMmhsdW80eXl5
+Command: python3 /Users/rayankazi/Developer/projects/realize/backend/run_analysis.py https://www.instagram.com/reel/DXiF1eBDEje/?igsh=ZnMwMmhsdW80eXl5
+Duration Seconds: 81.06
+Exit Code: 1
+--------------------------------------------------------------------------------
+STDOUT:
+Detected video reel.
+Created directory: /Users/rayankazi/Developer/projects/realize/data/c32cf068-8ca9-4f9d-9765-77a96e8b3f64
+Caption saved to /Users/rayankazi/Developer/projects/realize/data/c32cf068-8ca9-4f9d-9765-77a96e8b3f64/captions.txt
+Downloading video to /Users/rayankazi/Developer/projects/realize/data/c32cf068-8ca9-4f9d-9765-77a96e8b3f64/video.mp4...
+Video saved to /Users/rayankazi/Developer/projects/realize/data/c32cf068-8ca9-4f9d-9765-77a96e8b3f64/video.mp4
+Transcribing /Users/rayankazi/Developer/projects/realize/data/c32cf068-8ca9-4f9d-9765-77a96e8b3f64/video.mp4...
+Transcription text saved to /Users/rayankazi/Developer/projects/realize/data/c32cf068-8ca9-4f9d-9765-77a96e8b3f64/transcription.txt
+Checking transcription for visual dependency cues...
+The transcription consists solely of the repeated word "Go," which indicates it is likely just background music or a trending audio clip with no descriptive verbal content. Meanwhile, the caption is highly detailed, containing a complete breakdown of 7 foundational finance papers (Black-Scholes, Market Efficiency, Modern Portfolio Theory, etc.). 
+
+Since this is a caption-heavy reel where the caption contains the entirety of the valuable information and the audio/transcription provides no meaningful context or visual dependency triggers, visual extraction would not provide additional necessary information.
+
+Verdict: Frame-by-frame extraction is not required. NO
+No visual dependency detected. Skipping frame extraction.
+
+Invoking analyze-video skill on /Users/rayankazi/Developer/projects/realize/data/c32cf068-8ca9-4f9d-9765-77a96e8b3f64...
+--------------------------------------------------------------------------------
+STDERR:
+
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]
+Fetching 4 files: 100%|██████████| 4/4 [00:00<00:00, 19508.39it/s]
+YOLO mode is enabled. All tool calls will be automatically approved.
+Keychain initialization encountered an error: Cannot find module '../build/Release/keytar.node'
+Require stack:
+- /opt/homebrew/Cellar/gemini-cli/0.36.0/libexec/lib/node_modules/@google/gemini-cli/node_modules/keytar/lib/keytar.js
+Using FileKeychain fallback for secure storage.
+Loaded cached credentials.
+YOLO mode is enabled. All tool calls will be automatically approved.
+Loading extension: superpowers
+Scheduling MCP context refresh...
+Executing MCP context refresh...
+MCP context refresh complete.
+Error executing tool read_file: File path '/Users/rayankazi/Developer/projects/realize/data/c32cf068-8ca9-4f9d-9765-77a96e8b3f64/transcription.txt' is ignored by configured ignore patterns.
+Error executing tool read_file: File path '/Users/rayankazi/Developer/projects/realize/data/c32cf068-8ca9-4f9d-9765-77a96e8b3f64/captions.txt' is ignored by configured ignore patterns.
+{
+  "session_id": "2c539723-1aef-4be1-9cda-91f3a54f3fc0",
+  "error": {
+    "type": "FatalCancellationError",
+    "message": "Operation cancelled.",
+    "code": 130
+  }
+}[ERROR] {
+  "session_id": "2c539723-1aef-4be1-9cda-91f3a54f3fc0",
+  "error": {
+    "type": "FatalCancellationError",
+    "message": "Operation cancelled.",
+    "code": 130
+  }
+}
+Traceback (most recent call last):
+  File "/Users/rayankazi/Developer/projects/realize/backend/run_analysis.py", line 32, in <module>
+    main()
+    ~~~~^^
+  File "/Users/rayankazi/Developer/projects/realize/backend/run_analysis.py", line 25, in main
+    analyze_video(data)
+    ~~~~~~~~~~~~~^^^^^^
+  File "/Users/rayankazi/Developer/projects/realize/backend/analysis/analyze_video.py", line 93, in analyze_video
+    subprocess.run(
+    ~~~~~~~~~~~~~~^
+        ["gemini", "-p", f"Run the analyze-video skill with the directory {abs_dir}", "--yolo", "--output-format", "json", "--model", "pro"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        check=True,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['gemini', '-p', 'Run the analyze-video skill with the directory /Users/rayankazi/Developer/projects/realize/data/c32cf068-8ca9-4f9d-9765-77a96e8b3f64', '--yolo', '--output-format', 'json', '--model', 'pro']' returned non-zero exit status 130.
+================================================================================
+

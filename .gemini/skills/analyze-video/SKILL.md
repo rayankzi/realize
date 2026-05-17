@@ -1,6 +1,6 @@
 ---
 name: analyze-video
-description: Use when you need to analyze an Instagram reel directory containing a transcription, caption, and optionally extracted frames. Invoked with a directory path argument to the UUID reel directory.
+description: Use when you need to analyze an Instagram reel UUID directory containing a video, transcription, caption, and optionally extracted frames. Invoked with an absolute directory path argument to the UUID reel directory.
 ---
 
 # Analyze Instagram Reel / Video
@@ -9,22 +9,41 @@ description: Use when you need to analyze an Instagram reel directory containing
 
 Read the transcription, caption, and optionally extracted video frames from an Instagram reel's UUID directory, then synthesize the content into a structured markdown analysis file using the analyze-video prompt format.
 
+The reel directory layout must be:
+
+```text
+/Users/rayankazi/Developer/projects/realize/data/<uuid>/
+  video.<ext>
+  transcription.txt
+  captions.txt
+  frames/
+    frame_0001.jpg
+    frame_0002.jpg
+```
+
+Only `frames/frame_*.jpg` inside the provided UUID directory is valid frame input. Never create, infer, read, or move frames from the project root, from a sibling directory, or from alternate names such as `<uuid>-frames`, `extracted_frames`, or bare `frames`.
+
 ## How to Use
 
-The skill is invoked with one argument: the path to the UUID directory containing the reel's data.
+The skill is invoked with one argument: the absolute path to the UUID directory containing the reel's data.
 
 ### Step 1: Validate the Directory
 
-1. Use the Read tool to read `transcription.txt` from the provided directory.
-2. Use the Read tool to read `captions.txt` from the provided directory.
-3. Use the Glob tool to check for any extracted frames matching `frames/frame_*.jpg` in the provided directory.
-4. If both `transcription.txt` and `captions.txt` are missing, inform the user and stop.
+1. Confirm the provided argument is an absolute path to a directory under `/Users/rayankazi/Developer/projects/realize/data/`.
+2. Treat the final path segment as the UUID. It should match UUID format such as `123e4567-e89b-12d3-a456-426614174000`. If the path is not a UUID reel directory, inform the user and stop.
+3. Confirm at least one `video.*` file exists directly inside the UUID directory. Do not search for video files elsewhere.
+4. Use the Read tool to read `transcription.txt` from the provided directory.
+5. Use the Read tool to read `captions.txt` from the provided directory.
+6. Use the Glob tool to check for extracted frames matching only `<provided-directory>/frames/frame_*.jpg`.
+7. If both `transcription.txt` and `captions.txt` are missing, inform the user and stop.
+8. If frames are expected but are not found in `<provided-directory>/frames/`, do not search elsewhere. Inform the user that frames must be extracted to `<provided-directory>/frames/frame_*.jpg`.
 
 ### Step 2: Read All Content
 
 1. Note the transcription text from `transcription.txt` (may be empty).
 2. Note the caption text from `captions.txt`.
-3. If a `frames/` directory exists with frame images, use the Read tool to read **every** frame image file found (e.g., `frame_0001.jpg`, `frame_0002.jpg`, etc.). The Read tool supports viewing images natively. These frames are sampled at 1 frame per second.
+3. If `<provided-directory>/frames/` exists with `frame_*.jpg` images, use the Read tool to read **every** matching frame image file found (e.g., `frame_0001.jpg`, `frame_0002.jpg`, etc.). The Read tool supports viewing images natively. These frames are sampled at 1 frame per second.
+4. Do not read or use frame files from any other directory, even if they look related to the UUID. Using frames outside the UUID directory can corrupt the analysis.
 
 ### Step 3: Analyze and Generate Output
 

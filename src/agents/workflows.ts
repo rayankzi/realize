@@ -14,7 +14,10 @@ import {
 import { extractTitle, slugifyTitle } from "../lib/text";
 import type { InstagramMediaData, LmStudioModel, PromptBundle } from "../types";
 import { downloadCarouselImages, downloadVideo } from "../services/instagram";
-import { extractFrames, transcribeVideoWithMlxWhisper } from "../services/media";
+import {
+  extractFrames,
+  transcribeVideoWithMlxWhisper,
+} from "../services/media";
 import { createAgentTools } from "../tools/agent-tools";
 import { runAgentTask } from "./runtime";
 
@@ -88,7 +91,7 @@ export async function analyzeStaticPost(
   const { finalText } = await runAgentTask(
     model,
     prompts.analyzePost,
-    `Analyze the Instagram post workspace at ${workspacePath}. Use the available tools to inspect the caption and images, then write the final markdown analysis into the output directory. The relevant images from the workspace are attached to this message.`,
+    `Analyze the Instagram post workspace at ${workspacePath}. Start by reading ${path.join(workspacePath, "captions.txt")} and inspecting the attached workspace images. If you need to inspect directories first, use Glob or read the directory path to list its contents. Then write the final markdown analysis into the output directory.`,
     tools,
     imagePaths,
     client,
@@ -116,7 +119,7 @@ export async function analyzeTranscriptionForFrames(
   const { finalText } = await runAgentTask(
     model,
     prompts.analyzeTranscription,
-    `Read the transcription and caption in ${workspacePath}, then decide whether frame extraction is required. Return brief reasoning and a final YES or NO verdict exactly as instructed.`,
+    `Read ${path.join(workspacePath, "transcription.txt")} and ${path.join(workspacePath, "captions.txt")}, then decide whether frame extraction is required. If you need to inspect the workspace first, use Glob or read the directory path to list its contents. Return brief reasoning and a final YES or NO verdict exactly as instructed.`,
     tools,
     [],
     client,
@@ -148,7 +151,7 @@ export async function analyzeFramesAndFilter(
   await runAgentTask(
     model,
     prompts.analyzeFrames,
-    `Review the extracted frames in ${workspacePath}. Use the available tools to inspect the frame list and remove redundant or unhelpful frames. The current frame images are attached to this message.`,
+    `Review the extracted frames in ${path.join(workspacePath, "frames")}. Use the available tools to inspect the frame list and remove redundant or unhelpful frames. You can read the frames directory to list its contents, and the current frame images are attached to this message.`,
     tools,
     initialFrames,
     client,
@@ -207,7 +210,7 @@ export async function analyzeVideo(
   const { finalText } = await runAgentTask(
     model,
     prompts.analyzeVideo,
-    `Analyze the Instagram reel workspace at ${workspacePath}. Use the available tools to read the transcription and caption, inspect any remaining frame files, and write the final markdown analysis into the output directory. Any selected frames are attached to this message.`,
+    `Analyze the Instagram reel workspace at ${workspacePath}. Start by reading ${transcriptionPath} and ${path.join(workspacePath, "captions.txt")}. If frames exist, inspect ${path.join(workspacePath, "frames")} and use the attached frame images. If you need to inspect directories first, use Glob or read the directory path to list its contents. Then write the final markdown analysis into the output directory.`,
     tools,
     selectedFrames,
     client,

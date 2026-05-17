@@ -1,4 +1,11 @@
-import { readFile, rename, rm, writeFile } from "node:fs/promises";
+import {
+  readFile,
+  readdir,
+  rename,
+  rm,
+  stat,
+  writeFile,
+} from "node:fs/promises";
 import path from "node:path";
 
 import { tool } from "@lmstudio/sdk";
@@ -9,8 +16,141 @@ import { ensureAllowedPath, normalizeAndResolvePath } from "../lib/paths";
 import { parseCommand } from "../lib/text";
 import type { AgentToolContext } from "../types";
 
+const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
+
+function getAllowedRoots(context: AgentToolContext): string[] {
+  return [context.workspaceDir, context.outputDir];
+}
+
+function resolveAllowedPath(
+  inputPath: string,
+  baseDir: string,
+  allowedRoots: string[],
+): string {
+  return ensureAllowedPath(
+    normalizeAndResolvePath(inputPath, baseDir),
+    allowedRoots,
+  );
+}
+
+async function formatDirectoryListing(directoryPath: string): Promise<string> {
+  const entries = await readdir(directoryPath, { withFileTypes: true });
+  const lines = entries
+    .sort((left, right) => left.name.localeCompare(right.name))
+    .map((entry) => {
+      const kind = entry.isDirectory() ? "DIR " : "FILE";
+      return `[${kind}] ${entry.name}`;
+    });
+
+  if (lines.length === 0) {
+    return `Directory listing for ${directoryPath}:\n(empty)`;
+  }
+
+  return `Directory listing for ${directoryPath}:\n${lines.join("\n")}`;
+}
+
+export async function readAgentPath(
+  inputPath: string,
+  context: Pick<AgentToolContext, "workspaceDir" | "outputDir">,
+): Promise<string> {
+  const allowedRoots = getAllowedRoots({
+    ...context,
+    allowWrite: false,
+    allowRm: false,
+  });
+  const resolvedPath = resolveAllowedPath(
+    inputPath,
+    context.workspaceDir,
+    allowedRoots,
+  );
+  const pathStats = await stat(resolvedPath);
+
+  if (pathStats.isDirectory()) {
+    return formatDirectoryListing(resolvedPath);
+  }
+
+  const ext = path.extname(resolvedPath).toLowerCase();
+  if (IMAGE_EXTENSIONS.has(ext)) {
+    return `Image file available at ${resolvedPath}. Use the images already attached in the chat for visual analysis.`;
+  }
+
+  return readFile(resolvedPath, "utf8");
+}
+
+export async function writeAgentFile(
+  inputPath: string,
+  content: string,
+  context: Pick<AgentToolContext, "workspaceDir" | "outputDir" | "allowWrite">,
+): Promise<string> {
+  if (!context.allowWrite) {
+    return "Error: Write is not enabled for this task.";
+  }
+
+  const allowedRoots = getAllowedRoots({
+    ...context,
+    allowRm: false,
+  });
+  const resolvedPath = resolveAllowedPath(
+    inputPath,
+    context.outputDir,
+    allowedRoots,
+  );
+  await ensureDir(path.dirname(resolvedPath));
+  await writeFile(resolvedPath, content, "utf8");
+  return `Wrote ${resolvedPath}`;
+}
+
+export async function runAgentBashCommand(
+  command: string,
+  context: AgentToolContext,
+): Promise<string> {
+  const allowedRoots = getAllowedRoots(context);
+  const tokens = parseCommand(command);
+  const [bin, ...rest] = tokens;
+
+  if (bin === "mkdir" && rest[0] === "-p" && rest[1]) {
+    const dirPath = resolveAllowedPath(
+      rest[1],
+      context.workspaceDir,
+      allowedRoots,
+    );
+    await ensureDir(dirPath);
+    return `Created ${dirPath}`;
+  }
+
+  if (bin === "mv" && rest[0] && rest[1]) {
+    const fromPath = resolveAllowedPath(
+      rest[0],
+      context.workspaceDir,
+      allowedRoots,
+    );
+    const toPath = resolveAllowedPath(
+      rest[1],
+      context.workspaceDir,
+      allowedRoots,
+    );
+    await ensureDir(path.dirname(toPath));
+    await rename(fromPath, toPath);
+    return `Moved ${fromPath} -> ${toPath}`;
+  }
+
+  if (bin === "rm" && rest[0]) {
+    if (!context.allowRm) {
+      return "Error: rm is not enabled for this task.";
+    }
+
+    const targetPath = resolveAllowedPath(rest[0], context.workspaceDir, [
+      context.workspaceDir,
+    ]);
+    await rm(targetPath, { force: true });
+    return `Removed ${targetPath}`;
+  }
+
+  return `Error: Unsupported Bash command: ${command}`;
+}
+
 export function createAgentTools(context: AgentToolContext) {
-  const allowedRoots = [context.workspaceDir, context.outputDir];
+  const allowedRoots = getAllowedRoots(context);
 
   const Glob = tool({
     name: "Glob",
@@ -38,38 +178,20 @@ export function createAgentTools(context: AgentToolContext) {
       path: z.string(),
     },
     implementation: async ({ path: inputPath }) => {
-      const resolvedPath = ensureAllowedPath(
-        normalizeAndResolvePath(inputPath, context.workspaceDir),
-        allowedRoots,
-      );
-      const ext = path.extname(resolvedPath).toLowerCase();
-      if ([".jpg", ".jpeg", ".png", ".webp"].includes(ext)) {
-        return `Image file available at ${resolvedPath}. Use the images already attached in the chat for visual analysis.`;
-      }
-
-      return readFile(resolvedPath, "utf8");
+      return readAgentPath(inputPath, context);
     },
   });
 
   const Write = tool({
     name: "Write",
-    description: "Write UTF-8 content to a file in the output directory.",
+    description:
+      "Write UTF-8 content to a file under the allowed workspace or output directories. Creates parent directories automatically.",
     parameters: {
       path: z.string(),
       content: z.string(),
     },
     implementation: async ({ path: inputPath, content }) => {
-      if (!context.allowWrite) {
-        return "Error: Write is not enabled for this task.";
-      }
-
-      const resolvedPath = ensureAllowedPath(
-        normalizeAndResolvePath(inputPath, context.outputDir),
-        [context.outputDir],
-      );
-      await ensureDir(path.dirname(resolvedPath));
-      await writeFile(resolvedPath, content, "utf8");
-      return `Wrote ${resolvedPath}`;
+      return writeAgentFile(inputPath, content, context);
     },
   });
 
@@ -81,46 +203,7 @@ export function createAgentTools(context: AgentToolContext) {
       command: z.string(),
     },
     implementation: async ({ command }) => {
-      const tokens = parseCommand(command);
-      const [bin, ...rest] = tokens;
-
-      if (bin === "mkdir" && rest[0] === "-p" && rest[1]) {
-        const dirPath = ensureAllowedPath(
-          normalizeAndResolvePath(rest[1], context.workspaceDir),
-          allowedRoots,
-        );
-        await ensureDir(dirPath);
-        return `Created ${dirPath}`;
-      }
-
-      if (bin === "mv" && rest[0] && rest[1]) {
-        const fromPath = ensureAllowedPath(
-          normalizeAndResolvePath(rest[0], context.workspaceDir),
-          allowedRoots,
-        );
-        const toPath = ensureAllowedPath(
-          normalizeAndResolvePath(rest[1], context.workspaceDir),
-          allowedRoots,
-        );
-        await ensureDir(path.dirname(toPath));
-        await rename(fromPath, toPath);
-        return `Moved ${fromPath} -> ${toPath}`;
-      }
-
-      if (bin === "rm" && rest[0]) {
-        if (!context.allowRm) {
-          return "Error: rm is not enabled for this task.";
-        }
-
-        const targetPath = ensureAllowedPath(
-          normalizeAndResolvePath(rest[0], context.workspaceDir),
-          [context.workspaceDir],
-        );
-        await rm(targetPath, { force: true });
-        return `Removed ${targetPath}`;
-      }
-
-      return `Error: Unsupported Bash command: ${command}`;
+      return runAgentBashCommand(command, context);
     },
   });
 

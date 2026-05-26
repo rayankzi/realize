@@ -64,6 +64,7 @@ def main():
     total = len(links)
     failures = 0
 
+
     with LOG_PATH.open("w", encoding="utf-8") as log_file:
         write_batch_header(log_file, total)
 
@@ -97,6 +98,9 @@ def main():
                 duration=duration,
                 result=result,
             )
+
+            if (index == 15):
+                break
 
         finished_at = datetime.now().isoformat(timespec="seconds")
         log_file.write("Batch Complete\n")

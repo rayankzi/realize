@@ -110,6 +110,7 @@ If no such templates or scripts are found, omit this section entirely.]
 ### Step 5: Rename the Output File
 
 1. Read the analysis file you just wrote to determine the topic/theme of the content.
-2. Based on the title and topic, generate a short, descriptive, kebab-case filename (e.g., `python-debugging-tips.md`, `morning-routine-hacks.md`). Keep it concise (3-5 words max).
-3. Rename the file using Bash: `mv /Users/rayankazi/Developer/projects/realize/output/<uuid>-analysis.md /Users/rayankazi/Developer/projects/realize/output/<new-name>.md`
-4. Inform the user that the analysis has been saved and provide the final output path.
+2. Get today's date using Bash: `date +%-m-%-d` (returns `M-D` with no leading zeros, e.g. `5-26`). Save the result.
+3. Based on the title and topic, generate a short, descriptive, kebab-case base name (3-5 words max, e.g. `python-debugging-tips`, `morning-routine-hacks`). Append the date suffix so the final filename is `<base>-<M>-<D>.md` (e.g. `python-debugging-tips-5-26.md`).
+4. Rename the file using Bash: `mv /Users/rayankazi/Developer/projects/realize/output/<uuid>-analysis.md /Users/rayankazi/Developer/projects/realize/output/<base>-<M>-<D>.md`
+5. Inform the user that the analysis has been saved and provide the final output path.

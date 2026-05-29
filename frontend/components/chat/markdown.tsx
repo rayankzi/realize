@@ -2,6 +2,9 @@
 
 import { memo, useRef, useState, type TableHTMLAttributes } from "react";
 import { Streamdown } from "streamdown";
+import { createCodePlugin } from "@streamdown/code";
+import { math } from "@streamdown/math";
+import "katex/dist/katex.min.css";
 import { Check, Copy, Download, Maximize2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -11,6 +14,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
+const code = createCodePlugin({
+  themes: ["github-dark-default", "github-dark-default"],
+});
 
 type MarkdownTableProps = TableHTMLAttributes<HTMLTableElement> & {
   node?: unknown;
@@ -170,8 +177,9 @@ export const Markdown = memo(function Markdown({
     <Streamdown
       className={cn("hm-prose", className)}
       components={{ table: MarkdownTable }}
+      plugins={{ code, math }}
       controls={{
-        code: { copy: true },
+        code: { copy: true, download: true },
         table: { copy: false, download: false, fullscreen: false },
         mermaid: {
           copy: true,
@@ -180,8 +188,7 @@ export const Markdown = memo(function Markdown({
           panZoom: true,
         },
       }}
-      lineNumbers={false}
-      shikiTheme={["github-dark-default", "github-dark-default"]}
+      lineNumbers={true}
     >
       {children}
     </Streamdown>

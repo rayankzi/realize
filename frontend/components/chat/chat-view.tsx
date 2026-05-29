@@ -16,13 +16,13 @@ export function ChatView({
   model,
   onModelChange,
   reasoningEffort,
-  onCycleEffort,
+  onReasoningEffortChange,
 }: {
   chat: Chat;
   model: string | null;
   onModelChange: (m: string) => void;
   reasoningEffort: ReasoningEffort;
-  onCycleEffort: () => void;
+  onReasoningEffortChange: (effort: ReasoningEffort) => void;
 }) {
   const [input, setInput] = useState("");
   const transport = useMemo(
@@ -66,10 +66,10 @@ export function ChatView({
     messages[messages.length - 1].role === "assistant";
 
   return (
-    <div className="relative flex min-h-0 flex-1 flex-col">
+    <div className="relative flex h-full min-h-0 flex-1 flex-col">
       <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
         {isEmpty ? (
-          <div className="mx-auto flex h-full max-w-3xl flex-col items-center justify-center px-4 text-center">
+          <div className="mx-auto flex min-h-full max-w-3xl flex-col items-center justify-center px-4 pb-36 text-center">
             <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl border bg-muted">
               <MessageSquareText className="size-5 text-primary" />
             </div>
@@ -83,7 +83,7 @@ export function ChatView({
             </p>
           </div>
         ) : (
-          <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-8">
+          <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 pt-8 pb-48">
             {messages.map((m) => (
               <Message key={m.id} message={m} />
             ))}
@@ -132,7 +132,7 @@ export function ChatView({
         model={model}
         onModelChange={onModelChange}
         reasoningEffort={reasoningEffort}
-        onCycleEffort={onCycleEffort}
+        onReasoningEffortChange={onReasoningEffortChange}
       />
     </div>
   );

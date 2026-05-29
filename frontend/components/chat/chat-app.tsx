@@ -5,7 +5,6 @@ import { chatStore } from "@/lib/chat-store";
 import { useChats } from "@/hooks/use-chats";
 import {
   DEFAULT_REASONING_EFFORT,
-  REASONING_EFFORTS,
   type ReasoningEffort,
 } from "@/lib/config";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -49,17 +48,10 @@ export function ChatApp() {
     }
   }
 
-  function cycleEffort() {
-    setReasoningEffort((cur) => {
-      const i = REASONING_EFFORTS.indexOf(cur);
-      return REASONING_EFFORTS[(i + 1) % REASONING_EFFORTS.length];
-    });
-  }
-
   const activeChat = chats.find((c) => c.id === activeId) ?? null;
 
   return (
-    <SidebarProvider>
+    <SidebarProvider className="h-dvh min-h-0 overflow-hidden">
       <ChatSidebar
         chats={chats}
         activeId={activeId}
@@ -69,7 +61,7 @@ export function ChatApp() {
         onDelete={handleDelete}
       />
 
-      <SidebarInset className="min-w-0">
+      <SidebarInset className="h-dvh min-h-0 min-w-0 overflow-hidden">
         <header className="flex h-12 shrink-0 items-center gap-2 px-3">
           <SidebarTrigger />
           <span className="text-sm font-medium text-muted-foreground">
@@ -84,7 +76,7 @@ export function ChatApp() {
             model={model}
             onModelChange={setModel}
             reasoningEffort={reasoningEffort}
-            onCycleEffort={cycleEffort}
+            onReasoningEffortChange={setReasoningEffort}
           />
         ) : (
           <div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">

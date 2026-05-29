@@ -21,21 +21,26 @@ export function ChatApp() {
   );
   const [ready, setReady] = useState(false);
 
-  // pick or create an active chat on mount (client-only, post-hydration).
-  // This is a deliberate external-store -> state sync, not derivable at render
-  // because localStorage is unavailable during SSR.
-  /* eslint-disable react-hooks/set-state-in-effect */
+  // Load chats from the database, then pick or create an active chat. This is
+  // a deliberate external-store -> state sync that can't run during SSR: the
+  // store hydrates from the /api/chats endpoint on the client.
   useEffect(() => {
-    const existing = chatStore.getSnapshot();
-    if (existing.length > 0) {
-      setActiveId(existing[0].id);
-      if (existing[0].model) setModel(existing[0].model);
-    } else {
-      setActiveId(chatStore.create(null).id);
-    }
-    setReady(true);
+    let cancelled = false;
+    void chatStore.hydrate().then(() => {
+      if (cancelled) return;
+      const existing = chatStore.getSnapshot();
+      if (existing.length > 0) {
+        setActiveId(existing[0].id);
+        if (existing[0].model) setModel(existing[0].model);
+      } else {
+        setActiveId(chatStore.create(null).id);
+      }
+      setReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
-  /* eslint-enable react-hooks/set-state-in-effect */
 
   function handleNew() {
     setActiveId(chatStore.create(model).id);

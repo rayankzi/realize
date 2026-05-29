@@ -2,9 +2,14 @@
 
 import { memo, useState } from "react";
 import type { UIMessage } from "ai";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy, RefreshCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Markdown } from "./markdown";
 import { ReasoningBlock } from "./reasoning-block";
 
@@ -12,27 +17,35 @@ function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
   if (!text) return null;
   return (
-    <Button
-      variant="ghost"
-      size="xs"
-      onClick={() => {
-        navigator.clipboard?.writeText(text);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1400);
-      }}
-      className="text-muted-foreground opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100"
-      aria-label="Copy message"
-    >
-      {copied ? <Check data-icon="inline-start" /> : <Copy data-icon="inline-start" />}
-      {copied ? "Copied" : "Copy"}
-    </Button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon-xs"
+          onClick={() => {
+            navigator.clipboard?.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1400);
+          }}
+          className="text-muted-foreground"
+          aria-label="Copy response"
+        >
+          {copied ? <Check /> : <Copy />}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{copied ? "Copied" : "Copy"}</TooltipContent>
+    </Tooltip>
   );
 }
 
 export const Message = memo(function Message({
   message,
+  canRegenerate = false,
+  onRegenerate,
 }: {
   message: UIMessage;
+  canRegenerate?: boolean;
+  onRegenerate?: () => void;
 }) {
   const isUser = message.role === "user";
 
@@ -71,8 +84,29 @@ export const Message = memo(function Message({
           return null;
         })}
       </div>
-      <div className={cn("h-7", answerText ? "" : "hidden")}>
+      <div
+        className={cn(
+          "flex h-7 items-center gap-1 opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100",
+          answerText ? "" : "hidden",
+        )}
+      >
         <CopyButton text={answerText} />
+        {canRegenerate && onRegenerate ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                className="text-muted-foreground"
+                onClick={onRegenerate}
+                aria-label="Regenerate response"
+              >
+                <RefreshCcw />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Regenerate</TooltipContent>
+          </Tooltip>
+        ) : null}
       </div>
     </div>
   );

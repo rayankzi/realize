@@ -8,8 +8,10 @@ import { chatStore, type Chat } from "@/lib/chat-store";
 import type { ReasoningEffort } from "@/lib/config";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { Composer } from "./composer";
 import { Message } from "./message";
+import { ReasoningLoadingBlock } from "./reasoning-block";
 
 export function ChatView({
   chat,
@@ -59,14 +61,27 @@ export function ChatView({
   }
 
   const isEmpty = messages.length === 0;
+  const lastMessage = messages[messages.length - 1];
+  let lastAssistantIndex = -1;
+  for (let i = messages.length - 1; i >= 0; i -= 1) {
+    if (messages[i].role === "assistant") {
+      lastAssistantIndex = i;
+      break;
+    }
+  }
   const canRegenerate =
     !streaming &&
     status !== "error" &&
-    messages.length > 0 &&
-    messages[messages.length - 1].role === "assistant";
+    lastAssistantIndex === messages.length - 1;
+  const showReasoningLoading =
+    status === "submitted" &&
+    (!lastMessage ||
+      lastMessage.role !== "assistant" ||
+      lastMessage.parts.length === 0);
 
   return (
-    <div className="relative flex h-full min-h-0 flex-1 flex-col">
+    <TooltipProvider>
+      <div className="relative flex h-full min-h-0 flex-1 flex-col">
       <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
         {isEmpty ? (
           <div className="mx-auto flex min-h-full max-w-3xl flex-col items-center justify-center px-4 pb-36 text-center">
@@ -84,9 +99,16 @@ export function ChatView({
           </div>
         ) : (
           <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 pt-8 pb-48">
-            {messages.map((m) => (
-              <Message key={m.id} message={m} />
+            {messages.map((m, i) => (
+              <Message
+                key={m.id}
+                message={m}
+                canRegenerate={canRegenerate && i === lastAssistantIndex}
+                onRegenerate={() => regenerate({ body: { model, reasoningEffort } })}
+              />
             ))}
+
+            {showReasoningLoading && <ReasoningLoadingBlock />}
 
             {status === "error" && (
               <Alert variant="destructive">
@@ -105,19 +127,6 @@ export function ChatView({
               </Alert>
             )}
 
-            {canRegenerate && (
-              <div className="flex justify-start">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-muted-foreground"
-                  onClick={() => regenerate({ body: { model, reasoningEffort } })}
-                >
-                  <RefreshCcw data-icon="inline-start" /> Regenerate
-                </Button>
-              </div>
-            )}
-
             <div ref={bottomRef} className="h-px" />
           </div>
         )}
@@ -134,6 +143,7 @@ export function ChatView({
         reasoningEffort={reasoningEffort}
         onReasoningEffortChange={onReasoningEffortChange}
       />
-    </div>
+      </div>
+    </TooltipProvider>
   );
 }

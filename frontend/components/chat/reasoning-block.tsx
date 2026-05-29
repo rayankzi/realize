@@ -85,3 +85,14 @@ export function ReasoningBlock({
     </Collapsible>
   );
 }
+
+export function ReasoningLoadingBlock() {
+  return (
+    <div className="hm-rise mb-3 overflow-hidden rounded-lg border border-reasoning-border/60 bg-reasoning-bg">
+      <div className="flex w-full items-center gap-2 px-3 py-2 text-left text-[0.8rem] font-medium text-reasoning-fg">
+        <Brain className="size-3.5 shrink-0 text-reasoning-accent" />
+        <span className="hm-thinking">Thinking…</span>
+      </div>
+    </div>
+  );
+}

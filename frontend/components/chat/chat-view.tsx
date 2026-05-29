@@ -3,9 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { RefreshCcw, Sparkles } from "lucide-react";
+import { MessageSquareText, RefreshCcw, TriangleAlert } from "lucide-react";
 import { chatStore, type Chat } from "@/lib/chat-store";
 import type { ReasoningEffort } from "@/lib/config";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { Composer } from "./composer";
 import { Message } from "./message";
 
@@ -64,20 +66,20 @@ export function ChatView({
     messages[messages.length - 1].role === "assistant";
 
   return (
-    <div className="relative flex h-full min-w-0 flex-1 flex-col">
+    <div className="relative flex min-h-0 flex-1 flex-col">
       <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
         {isEmpty ? (
           <div className="mx-auto flex h-full max-w-3xl flex-col items-center justify-center px-4 text-center">
-            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-[var(--radius-lg)] border border-border bg-surface-2">
-              <Sparkles size={22} className="text-accent" />
+            <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl border bg-muted">
+              <MessageSquareText className="size-5 text-primary" />
             </div>
-            <h1 className="text-xl font-semibold tracking-tight text-text">
+            <h1 className="text-xl font-semibold tracking-tight">
               What should we work through?
             </h1>
-            <p className="mt-2 max-w-sm text-sm text-text-muted">
+            <p className="mt-2 max-w-sm text-sm text-muted-foreground">
               {model
                 ? `Chatting with ${model} on your machine.`
-                : "Pick a model below to start. Make sure LM Studio's server is running."}
+                : "Pick a model below to start. Make sure LM Studio’s server is running."}
             </p>
           </div>
         ) : (
@@ -87,27 +89,32 @@ export function ChatView({
             ))}
 
             {status === "error" && (
-              <div className="rounded-[var(--radius-md)] border border-[var(--color-danger)]/40 bg-[var(--color-danger)]/10 px-4 py-3 text-sm text-text">
-                {error?.message ?? "Something went wrong while generating."}
-                <button
-                  type="button"
-                  onClick={() => regenerate({ body: { model, reasoningEffort } })}
-                  className="ml-3 inline-flex items-center gap-1.5 text-accent hover:underline"
-                >
-                  <RefreshCcw size={13} /> Retry
-                </button>
-              </div>
+              <Alert variant="destructive">
+                <TriangleAlert />
+                <AlertTitle>Generation failed</AlertTitle>
+                <AlertDescription className="flex flex-col items-start gap-2">
+                  {error?.message ?? "Something went wrong while generating."}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => regenerate({ body: { model, reasoningEffort } })}
+                  >
+                    <RefreshCcw data-icon="inline-start" /> Retry
+                  </Button>
+                </AlertDescription>
+              </Alert>
             )}
 
             {canRegenerate && (
               <div className="flex justify-start">
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-muted-foreground"
                   onClick={() => regenerate({ body: { model, reasoningEffort } })}
-                  className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] px-2 py-1 text-xs text-text-faint transition-colors hover:bg-surface-2 hover:text-text-muted"
                 >
-                  <RefreshCcw size={12} /> Regenerate
-                </button>
+                  <RefreshCcw data-icon="inline-start" /> Regenerate
+                </Button>
               </div>
             )}
 

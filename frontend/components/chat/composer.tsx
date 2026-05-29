@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { ArrowUp, Plus, Square } from "lucide-react";
+import { ArrowUp, Brain, Square } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { type ReasoningEffort } from "@/lib/config";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 import { ModelPicker } from "./model-picker";
 
-const MAX_HEIGHT = 200;
-
 const effortStyles: Record<ReasoningEffort, string> = {
-  low: "text-text-muted",
-  medium: "text-accent",
+  low: "text-muted-foreground",
+  medium: "text-primary",
   high: "text-reasoning-accent",
 };
 
@@ -35,16 +35,6 @@ export function Composer({
   reasoningEffort: ReasoningEffort;
   onCycleEffort: () => void;
 }) {
-  const ref = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.height = "auto";
-    el.style.height = Math.min(el.scrollHeight, MAX_HEIGHT) + "px";
-    el.style.overflowY = el.scrollHeight > MAX_HEIGHT ? "auto" : "hidden";
-  }, [value]);
-
   const canSend = value.trim().length > 0 && !!model && !streaming;
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
@@ -57,60 +47,59 @@ export function Composer({
   return (
     <div className="pointer-events-none sticky bottom-0 z-10 px-4 pb-4">
       <div className="pointer-events-auto mx-auto w-full max-w-3xl">
-        <div className="rounded-[var(--radius-xl)] border border-border bg-surface-1/85 p-2 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-colors duration-[var(--dur-mid)] focus-within:border-accent/60">
-          <textarea
-            ref={ref}
+        <div className="rounded-2xl border bg-card/85 p-2 shadow-lg backdrop-blur-xl transition-colors focus-within:border-ring">
+          <Textarea
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={handleKeyDown}
             rows={1}
             placeholder="Message your local model…"
-            className="block max-h-[200px] w-full resize-none bg-transparent px-2.5 py-2 text-[0.95rem] leading-relaxed text-text placeholder:text-text-faint focus:outline-none"
+            className="max-h-[200px] min-h-[2.5rem] resize-none border-0 bg-transparent px-2.5 py-2 text-[0.95rem] leading-relaxed shadow-none focus-visible:ring-0 dark:bg-transparent"
           />
 
           <div className="mt-1 flex items-center gap-1.5">
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={onCycleEffort}
               title={`Reasoning effort: ${reasoningEffort} — click to change`}
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] py-1.5 pl-1.5 pr-2.5 text-xs text-text-muted transition-colors duration-[var(--dur-fast)] hover:bg-surface-3 hover:text-text"
+              className="text-muted-foreground"
             >
-              <Plus size={15} className="shrink-0" />
-              <span className="text-text-faint">reasoning</span>
+              <Brain data-icon="inline-start" />
+              <span>reasoning</span>
               <span className={cn("font-medium capitalize", effortStyles[reasoningEffort])}>
                 {reasoningEffort}
               </span>
-            </button>
+            </Button>
 
-            <span className="mx-0.5 h-4 w-px bg-border-soft" />
+            <Separator orientation="vertical" className="!h-4" />
 
             <ModelPicker value={model} onChange={onModelChange} />
 
             <div className="ml-auto">
               {streaming ? (
-                <button
-                  type="button"
+                <Button
+                  variant="secondary"
+                  size="icon"
                   onClick={onStop}
                   aria-label="Stop generating"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-surface-3 text-text transition-colors duration-[var(--dur-fast)] hover:bg-border active:translate-y-px"
                 >
-                  <Square size={15} className="fill-current" />
-                </button>
+                  <Square className="fill-current" />
+                </Button>
               ) : (
-                <button
-                  type="button"
+                <Button
+                  size="icon"
                   onClick={onSubmit}
                   disabled={!canSend}
                   aria-label="Send message"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-accent text-accent-contrast shadow-[0_2px_14px_-2px_oklch(0.74_0.12_240_/_0.55)] transition-[background-color,opacity,transform] duration-[var(--dur-fast)] hover:bg-accent-strong active:translate-y-px disabled:bg-surface-3 disabled:text-text-faint disabled:shadow-none"
                 >
-                  <ArrowUp size={17} strokeWidth={2.4} />
-                </button>
+                  <ArrowUp />
+                </Button>
               )}
             </div>
           </div>
         </div>
-        <p className="mt-2 text-center text-[0.68rem] text-text-faint">
+        <p className="mt-2 text-center text-[0.68rem] text-muted-foreground">
           Local inference via LM Studio · Enter to send · Shift+Enter for newline
         </p>
       </div>

@@ -179,7 +179,7 @@ export const Markdown = memo(function Markdown({
       components={{ table: MarkdownTable }}
       plugins={{ code, math }}
       controls={{
-        code: { copy: true, download: true },
+        code: { copy: true, download: false },
         table: { copy: false, download: false, fullscreen: false },
         mermaid: {
           copy: true,

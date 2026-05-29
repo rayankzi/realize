@@ -104,16 +104,20 @@ export function Composer({
                         onReasoningEffortChange(effort as ReasoningEffort)
                       }
                     >
-                      <DropdownMenuRadioItem value="low">low</DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="medium">medium</DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="high">high</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="low">
+                        low
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="medium">
+                        medium
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="high">
+                        high
+                      </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
                   </DropdownMenuSubContent>
                 </DropdownMenuSub>
               </DropdownMenuContent>
             </DropdownMenu>
-
-            <Separator orientation="vertical" className="!h-4" />
 
             <ModelPicker value={model} onChange={onModelChange} />
 
@@ -141,7 +145,8 @@ export function Composer({
           </div>
         </div>
         <p className="mt-2 text-center text-[0.68rem] text-muted-foreground">
-          Local inference via LM Studio · Enter to send · Shift+Enter for newline
+          Local inference via LM Studio · Enter to send · Shift+Enter for
+          newline
         </p>
       </div>
     </div>

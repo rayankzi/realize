@@ -292,6 +292,7 @@
   overflow-wrap: anywhere;
 }
 .hm-prose [data-streamdown="code-block"] {
+  position: relative;
   margin: 1em 0;
   overflow: hidden;
   border: 1px solid color-mix(in oklch, var(--border) 72%, transparent);
@@ -299,25 +300,13 @@
   background: oklch(0.18 0 0);
   box-shadow: inset 0 1px 0 oklch(1 0 0 / 6%);
 }
-.hm-prose [data-streamdown="code-block"] > div:first-child {
-  min-height: 2.75rem;
-  padding: 0 0.95rem;
-  color: oklch(0.72 0 0);
-  border-bottom: 1px solid oklch(1 0 0 / 8%);
-  background: oklch(0.205 0 0);
-}
-.hm-prose [data-streamdown="code-block-actions"] {
-  gap: 0.25rem;
-  border-color: oklch(1 0 0 / 8%);
-  background: oklch(0.24 0 0 / 84%);
-}
-.hm-prose [data-streamdown="code-block-actions"] button {
-  color: oklch(0.72 0 0);
-  border-radius: var(--radius-sm);
-}
-.hm-prose [data-streamdown="code-block-actions"] button:hover {
-  color: oklch(0.95 0 0);
-  background: oklch(1 0 0 / 8%);
+/* pin the action pill (copy) to the header row, centered on the 32px header */
+.hm-prose [data-streamdown="code-block"] > div:has(> [data-streamdown="code-block-actions"]) {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  height: 2rem;
+  margin-top: 0;
 }
 .hm-prose [data-streamdown="code-block-body"] {
   border: 0;

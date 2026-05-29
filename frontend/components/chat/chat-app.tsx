@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { chatStore } from "@/lib/chat-store";
 import { useChats } from "@/hooks/use-chats";
+import { DEFAULT_REASONING_EFFORT, type ReasoningEffort } from "@/lib/config";
 import {
-  DEFAULT_REASONING_EFFORT,
-  type ReasoningEffort,
-} from "@/lib/config";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { ChatSidebar } from "./sidebar";
 import { ChatView } from "./chat-view";
 

@@ -13,6 +13,7 @@ fine -- everything is stored. Re-runs skip documents already recorded in logs.tx
 
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -106,11 +107,23 @@ def get_metadata(filename: str, content: str) -> dict:
 # --- Supermemory ------------------------------------------------------------
 
 
+def to_custom_id(filename: str) -> str:
+    """Turn a filename into a Supermemory-safe custom_id.
+
+    Supermemory only allows alphanumerics, hyphens, underscores, and colons in
+    customId, so the ".md" extension (and any other illegal character) is
+    rejected with a 400. Drop the extension and replace anything illegal with an
+    underscore; the original filename is still kept in metadata via source_file.
+    """
+    stem = os.path.splitext(filename)[0]
+    return re.sub(r"[^A-Za-z0-9_:-]", "_", stem)
+
+
 def add_to_supermemory(client, content, title, main_topic, subtopic, filename):
     return client.add(
         content=content,
         container_tag=CONTAINER_TAG,
-        custom_id=filename,  # dedup / update key
+        custom_id=to_custom_id(filename),  # dedup / update key
         metadata={
             "title": title,
             "main_topic": main_topic,

@@ -1,11 +1,16 @@
 """Ingest every raw-docs markdown file into a local Supermemory instance.
 
 For each document this script:
-  1. Calls `claude -p --model haiku` to read the document and produce metadata
-     (a clean title, a main topic, and a subtopic) as strict JSON.
+  1. Asks a local LLM to read the document and produce metadata (a clean title,
+     a main topic, and a subtopic) as strict JSON. The primary model is
+     `gpt-oss-20b` served by LMStudio at http://localhost:1234/v1 (assumed
+     already loaded and running). If LMStudio is unreachable or returns
+     unparseable output, it falls back to `claude -p --model haiku`.
   2. Adds the document to Supermemory (local, http://localhost:6767) under the
      container tag "project_realize" with that metadata attached.
   3. Appends a line to logs.txt recording the title, topic, and subtopic.
+  4. Records the (main_topic, subtopic) pair in topics.json so future documents
+     can reuse the existing taxonomy instead of inventing near-duplicates.
 
 Documents in the same topic/subtopic may hold conflicting viewpoints; that is
 fine -- everything is stored. Re-runs skip documents already recorded in logs.txt.
@@ -18,6 +23,7 @@ import subprocess
 import sys
 import time
 
+import requests
 from supermemory import Supermemory
 
 # --- Config -----------------------------------------------------------------
@@ -28,43 +34,163 @@ SUPERMEMORY_API_KEY = (
 SUPERMEMORY_BASE_URL = "http://localhost:6767"
 CONTAINER_TAG = "project_realize"
 
+# Local LLM (LMStudio, OpenAI-compatible API). The model is assumed to already
+# be loaded and the server running; this script only fetches completions from it.
+LMSTUDIO_BASE_URL = "http://localhost:1234/v1"
+LMSTUDIO_MODEL = "gpt-oss-20b"
+
 # memory/ -> scripts/ -> project root
 PROJECT_ROOT = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 )
 RAW_DOCS_DIR = os.path.join(PROJECT_ROOT, "raw-docs")
 LOG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs.txt")
+TOPICS_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "topics.json"
+)
 
 # Each log line is prefixed with [<filename>] so re-runs can detect prior work
 # without disturbing the required human-readable sentence that follows.
 LOG_PREFIX_FMT = "[{filename}] "
 
+# Tagging prompt (formerly scripts/memory/prompt.md). The {known_topics},
+# {filename}, and {content} placeholders are filled by _build_prompt via
+# str.replace -- NOT str.format, because the prompt also contains literal JSON
+# braces that str.format would try (and fail) to interpret.
+PROMPT_TEMPLATE = """You are a document-tagging assistant. You read ONE document and produce metadata
+for a memory system. Later, another AI searches this memory using meaning-based
+(semantic) search to find documents and cite them. So tags must be clear, natural
+category names a person might actually search for. Reusing the same tag for the
+same idea keeps related documents grouped together.
 
-# --- Metadata via claude -p -------------------------------------------------
+Produce three fields:
 
+1. title
+   Clean, human-readable name. Title-case. No file extension.
+   Example: "Setting Up a Local RAG Pipeline"
 
-def _build_prompt(filename: str, content: str) -> str:
-    return f"""You are tagging a document for a larger memory system.
+2. main_topic
+   A BROAD, REUSABLE category, like a folder name MANY documents could share.
+   1-3 words. Plain, natural words.
+   Good: "Machine Learning" | "Personal Finance" | "Web Development"
+   Too narrow (avoid): "ChromaDB vector store setup"
 
-This metadata powers retrieval: later, an AI will look up stored documents by
-their topic and subtopic to answer questions and make citations. So the
-"main_topic" should be a GENERAL, reusable category (something many documents
-could share), and the "subtopic" should be a more SPECIFIC area within that
-topic. Keep both concise (a few words each). The "title" should be a clean,
-human-readable title for the document.
+3. subtopic
+   A more SPECIFIC area INSIDE the main_topic. 1-4 words. Still reusable.
+   Machine Learning -> "Retrieval-Augmented Generation"
+   Personal Finance -> "Tax Filing"
 
-Read the document below (filename: {filename}) and respond with STRICT JSON ONLY
--- no prose, no markdown fences -- in exactly this shape:
-{{"title": "...", "main_topic": "...", "subtopic": "..."}}
+REUSE EXISTING TOPICS WHEN POSSIBLE.
+Here are topics already in the memory system:
+{known_topics}
+(If this list is empty, just create new topics.)
 
-Document:
+Follow these steps:
+
+1. Decide what the document is MAINLY about.
+2. If a main_topic in the list fits, reuse it with the EXACT same wording.
+   Then reuse a listed subtopic if one fits, or add a new short subtopic under it.
+3. If no listed main_topic fits, create a NEW main_topic (broad and reusable) plus
+   a subtopic, at the SAME level of generality as the examples in the list.
+
+Rules:
+
+- main_topic must be MORE GENERAL than subtopic.
+- Keep both short (a few words). No full sentences.
+- Tag the MAIN subject, not small side details.
+- Prefer natural words people would search for, not codes or abbreviations.
+
+OUTPUT FORMAT (very important):
+Output STRICT JSON ONLY, on a single line. No explanation, no extra text, and NO
+markdown code fences (do NOT write ```). Exactly these keys:
+{"title": "...", "main_topic": "...", "subtopic": "..."}
+
+Worked example (shows how to reuse the list):
+Known topics:
+
+- Web Development - Authentication - React
+  Document: explains how to add Google login to a React app.
+  Output:
+  {"title": "Adding Google Login to a React App", "main_topic": "Web Development", "subtopic": "Authentication"}
+
+More examples:
+{"title": "Comparing Hash Map Implementations in Java", "main_topic": "Data Structures", "subtopic": "Hash Maps"}
+{"title": "Notes on the Krebs Cycle", "main_topic": "Biology", "subtopic": "Cellular Respiration"}
+
+Document filename: {filename}
+Document content:
+
 ---
-{content}
----"""
+
+## {content}
+
+Now output the JSON and nothing else."""
+
+
+# --- Topic taxonomy (topics.json) -------------------------------------------
+
+
+def load_topics() -> dict:
+    """Return the {main_topic: [subtopics]} map from topics.json (or {})."""
+    if not os.path.exists(TOPICS_PATH):
+        return {}
+    try:
+        with open(TOPICS_PATH, "r") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+
+def save_topics(topics: dict) -> None:
+    with open(TOPICS_PATH, "w") as f:
+        json.dump(topics, f, indent=2, sort_keys=True)
+        f.write("\n")
+
+
+def format_known_topics(topics: dict) -> str:
+    """Render the topics map into the '- Topic - Subtopic' bullet lines the
+    prompt's worked example expects. Empty string when there are no topics."""
+    lines = []
+    for main_topic in sorted(topics):
+        for subtopic in topics[main_topic]:
+            lines.append(f"- {main_topic} - {subtopic}")
+    return "\n".join(lines)
+
+
+def update_topics(topics: dict, main_topic: str, subtopic: str) -> bool:
+    """Record (main_topic, subtopic). Returns True if topics changed.
+
+    Matching is case-insensitive so we don't create near-duplicate buckets that
+    differ only in capitalization; the first-seen wording is kept.
+    """
+    main_topic = main_topic.strip()
+    subtopic = subtopic.strip()
+    if not main_topic or not subtopic:
+        return False
+    key = next(
+        (k for k in topics if k.lower() == main_topic.lower()), main_topic
+    )
+    subs = topics.setdefault(key, [])
+    if any(s.lower() == subtopic.lower() for s in subs):
+        return False
+    subs.append(subtopic)
+    return True
+
+
+# --- Metadata via local LLM (LMStudio) with claude fallback -----------------
+
+
+def _build_prompt(filename: str, content: str, known_topics: str = "") -> str:
+    return (
+        PROMPT_TEMPLATE.replace("{known_topics}", known_topics)
+        .replace("{filename}", filename)
+        .replace("{content}", content)
+    )
 
 
 def _extract_json(text: str) -> dict:
-    """Pull the JSON object out of Claude's text response, tolerating fences."""
+    """Pull the JSON object out of the model's text response, tolerating fences."""
     text = text.strip()
     if text.startswith("```"):
         # Strip a leading ```json / ``` fence and trailing ```
@@ -83,9 +209,25 @@ def _extract_json(text: str) -> dict:
         raise
 
 
-def get_metadata(filename: str, content: str) -> dict:
-    """Call `claude -p --model haiku` and return {title, main_topic, subtopic}."""
-    prompt = _build_prompt(filename, content)
+def _call_lmstudio(prompt: str) -> str:
+    """Fetch a completion from the local gpt-oss-20b model and return its text."""
+    resp = requests.post(
+        f"{LMSTUDIO_BASE_URL}/chat/completions",
+        json={
+            "model": LMSTUDIO_MODEL,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0,
+            "stream": False,
+        },
+        timeout=120,
+    )
+    resp.raise_for_status()
+    data = resp.json()
+    return data["choices"][0]["message"]["content"]
+
+
+def _call_claude(prompt: str) -> str:
+    """Fallback: call `claude -p --model haiku` and return the model's text."""
     result = subprocess.run(
         ["claude", "-p", prompt, "--model", "haiku", "--output-format", "json"],
         capture_output=True,
@@ -95,8 +237,17 @@ def get_metadata(filename: str, content: str) -> dict:
     # --output-format json wraps Claude's reply in an object whose `result`
     # field holds the model's text. That text is the JSON we asked for.
     wrapper = json.loads(result.stdout)
-    inner_text = wrapper.get("result", result.stdout)
-    meta = _extract_json(inner_text)
+    return wrapper.get("result", result.stdout)
+
+
+def get_metadata(filename: str, content: str, known_topics: str = "") -> dict:
+    """Return {title, main_topic, subtopic} from the local LLM (claude fallback)."""
+    prompt = _build_prompt(filename, content, known_topics)
+    try:
+        meta = _extract_json(_call_lmstudio(prompt))
+    except Exception as exc:  # connection / HTTP / JSON -> fall back to claude
+        print(f"    LMStudio failed ({exc}); falling back to claude -p haiku")
+        meta = _extract_json(_call_claude(prompt))
     return {
         "title": str(meta["title"]).strip(),
         "main_topic": str(meta["main_topic"]).strip(),
@@ -171,6 +322,7 @@ def main():
 
     files = sorted(f for f in os.listdir(RAW_DOCS_DIR) if f.endswith(".md"))
     processed = already_logged()
+    topics = load_topics()
     total = len(files)
     print(f"Found {total} markdown files; {len(processed)} already logged.")
 
@@ -185,7 +337,7 @@ def main():
             with open(path, "r") as f:
                 content = f.read()
 
-            meta = get_metadata(filename, content)
+            meta = get_metadata(filename, content, format_known_topics(topics))
             add_to_supermemory(
                 client,
                 content,
@@ -201,6 +353,10 @@ def main():
             with open(LOG_PATH, "a") as logf:
                 logf.write(line + "\n")
             print(f"    {line}")
+
+            # Persist the taxonomy incrementally so a mid-run crash keeps progress.
+            if update_topics(topics, meta["main_topic"], meta["subtopic"]):
+                save_topics(topics)
         except Exception as exc:  # keep going if one document fails
             print(f"    ERROR on {filename}: {exc}")
 

@@ -1,9 +1,9 @@
 """Small-batch test for the Supermemory ingest pipeline.
 
-Runs the full ingest path (local-LLM metadata -> Supermemory add -> logs.txt ->
-topics.json) on FIVE randomly chosen documents so you can validate end to end
-without looping the whole directory. Metadata comes from gpt-oss-20b via
-LMStudio, falling back to `claude -p haiku` if LMStudio is unavailable.
+Runs the full ingest path (claude -p haiku metadata -> Supermemory add ->
+logs.txt -> topics.json) on FIVE randomly chosen documents so you can validate
+end to end without looping the whole directory. Metadata comes from
+`claude -p --model haiku`.
 
 Already-logged documents (recorded in logs.txt) are excluded from the random
 pick so re-runs exercise fresh files. Pass an integer to change the count.
@@ -21,7 +21,6 @@ from supermemory import Supermemory
 
 from ingest_docs import (
     CONTAINER_TAG,
-    LMSTUDIO_MODEL,
     LOG_PATH,
     RAW_DOCS_DIR,
     SUPERMEMORY_API_KEY,
@@ -64,7 +63,7 @@ def main():
 
     total = len(sample)
     print(f"Picked {total} random docs from {len(candidates)} unprocessed files.")
-    print(f"Metadata via LMStudio {LMSTUDIO_MODEL} (claude -p haiku fallback).")
+    print("Metadata via claude -p --model haiku.")
     print(f"Container tag: {CONTAINER_TAG}\n")
 
     for i, filename in enumerate(sample, 1):

@@ -1,11 +1,8 @@
 """Ingest every raw-docs markdown file into a local Supermemory instance.
 
 For each document this script:
-  1. Asks a local LLM to read the document and produce metadata (a clean title,
-     a main topic, and a subtopic) as strict JSON. The primary model is
-     `gpt-oss-20b` served by LMStudio at http://localhost:1234/v1 (assumed
-     already loaded and running). If LMStudio is unreachable or returns
-     unparseable output, it falls back to `claude -p --model haiku`.
+  1. Calls `claude -p --model haiku` to read the document and produce metadata
+     (a clean title, a main topic, and a subtopic) as strict JSON.
   2. Adds the document to Supermemory (local, http://localhost:6767) under the
      container tag "project_realize" with that metadata attached.
   3. Appends a line to logs.txt recording the title, topic, and subtopic.
@@ -23,7 +20,6 @@ import subprocess
 import sys
 import time
 
-import requests
 from supermemory import Supermemory
 
 # --- Config -----------------------------------------------------------------
@@ -33,11 +29,6 @@ SUPERMEMORY_API_KEY = (
 )
 SUPERMEMORY_BASE_URL = "http://localhost:6767"
 CONTAINER_TAG = "project_realize"
-
-# Local LLM (LMStudio, OpenAI-compatible API). The model is assumed to already
-# be loaded and the server running; this script only fetches completions from it.
-LMSTUDIO_BASE_URL = "http://localhost:1234/v1"
-LMSTUDIO_MODEL = "gpt-oss-20b"
 
 # memory/ -> scripts/ -> project root
 PROJECT_ROOT = os.path.dirname(
@@ -178,7 +169,7 @@ def update_topics(topics: dict, main_topic: str, subtopic: str) -> bool:
     return True
 
 
-# --- Metadata via local LLM (LMStudio) with claude fallback -----------------
+# --- Metadata via claude -p -------------------------------------------------
 
 
 def _build_prompt(filename: str, content: str, known_topics: str = "") -> str:
@@ -209,25 +200,8 @@ def _extract_json(text: str) -> dict:
         raise
 
 
-def _call_lmstudio(prompt: str) -> str:
-    """Fetch a completion from the local gpt-oss-20b model and return its text."""
-    resp = requests.post(
-        f"{LMSTUDIO_BASE_URL}/chat/completions",
-        json={
-            "model": LMSTUDIO_MODEL,
-            "messages": [{"role": "user", "content": prompt}],
-            "temperature": 0,
-            "stream": False,
-        },
-        timeout=120,
-    )
-    resp.raise_for_status()
-    data = resp.json()
-    return data["choices"][0]["message"]["content"]
-
-
 def _call_claude(prompt: str) -> str:
-    """Fallback: call `claude -p --model haiku` and return the model's text."""
+    """Call `claude -p --model haiku` and return the model's text."""
     result = subprocess.run(
         ["claude", "-p", prompt, "--model", "haiku", "--output-format", "json"],
         capture_output=True,
@@ -241,13 +215,9 @@ def _call_claude(prompt: str) -> str:
 
 
 def get_metadata(filename: str, content: str, known_topics: str = "") -> dict:
-    """Return {title, main_topic, subtopic} from the local LLM (claude fallback)."""
+    """Call `claude -p --model haiku` and return {title, main_topic, subtopic}."""
     prompt = _build_prompt(filename, content, known_topics)
-    try:
-        meta = _extract_json(_call_lmstudio(prompt))
-    except Exception as exc:  # connection / HTTP / JSON -> fall back to claude
-        print(f"    LMStudio failed ({exc}); falling back to claude -p haiku")
-        meta = _extract_json(_call_claude(prompt))
+    meta = _extract_json(_call_claude(prompt))
     return {
         "title": str(meta["title"]).strip(),
         "main_topic": str(meta["main_topic"]).strip(),

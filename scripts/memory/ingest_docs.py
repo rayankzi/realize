@@ -11,11 +11,18 @@ For each document this script:
 
 Documents in the same topic/subtopic may hold conflicting viewpoints; that is
 fine -- everything is stored. Re-runs skip documents already recorded in logs.txt.
+
+Usage:
+    python scripts/memory/ingest_docs.py [batch_size]
+
+Pass an optional batch_size to process at most that many documents in one run;
+omit it to process every unlogged document.
 """
 
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -35,6 +42,7 @@ PROJECT_ROOT = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 )
 RAW_DOCS_DIR = os.path.join(PROJECT_ROOT, "raw-docs")
+ADDED_TO_MEMORY_DIR = os.path.join(PROJECT_ROOT, "added-to-memory")
 LOG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs.txt")
 TOPICS_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "topics.json"
@@ -282,6 +290,18 @@ def already_logged() -> set:
 
 
 def main():
+    # Optional batch size: process at most this many documents in one run.
+    batch_size = None
+    if len(sys.argv) > 1:
+        try:
+            batch_size = int(sys.argv[1])
+        except ValueError:
+            print(f"Invalid batch size: {sys.argv[1]!r} (must be an integer)")
+            sys.exit(1)
+        if batch_size <= 0:
+            print(f"Batch size must be a positive integer: {batch_size}")
+            sys.exit(1)
+
     if not os.path.isdir(RAW_DOCS_DIR):
         print(f"raw-docs directory not found: {RAW_DOCS_DIR}")
         sys.exit(1)
@@ -294,12 +314,21 @@ def main():
     processed = already_logged()
     topics = load_topics()
     total = len(files)
-    print(f"Found {total} markdown files; {len(processed)} already logged.")
+    limit_note = f"; batch size {batch_size}" if batch_size else ""
+    print(
+        f"Found {total} markdown files; {len(processed)} already logged{limit_note}."
+    )
 
+    handled = 0
     for i, filename in enumerate(files, 1):
         if filename in processed:
             print(f"[{i}/{total}] skip (already logged): {filename}")
             continue
+
+        if batch_size is not None and handled >= batch_size:
+            print(f"Reached batch size {batch_size}; stopping.")
+            break
+        handled += 1
 
         print(f"[{i}/{total}] processing: {filename}")
         path = os.path.join(RAW_DOCS_DIR, filename)
@@ -323,6 +352,11 @@ def main():
             with open(LOG_PATH, "a") as logf:
                 logf.write(line + "\n")
             print(f"    {line}")
+
+            # Move the ingested document out of raw-docs so it isn't re-ingested.
+            dest = os.path.join(ADDED_TO_MEMORY_DIR, filename)
+            shutil.move(path, dest)
+            print(f"    moved: {path} -> {dest}")
 
             # Persist the taxonomy incrementally so a mid-run crash keeps progress.
             if update_topics(topics, meta["main_topic"], meta["subtopic"]):

@@ -14,6 +14,7 @@ Usage:
 
 import os
 import random
+import shutil
 import sys
 import time
 
@@ -22,6 +23,7 @@ from supermemory import Supermemory
 from ingest_docs import (
     CONTAINER_TAG,
     LOG_PATH,
+    PROJECT_ROOT,
     RAW_DOCS_DIR,
     SUPERMEMORY_API_KEY,
     SUPERMEMORY_BASE_URL,
@@ -36,6 +38,7 @@ from ingest_docs import (
 )
 
 DEFAULT_COUNT = 5
+ADDED_TO_MEMORY_DIR = os.path.join(PROJECT_ROOT, "added-to-memory")
 
 
 def main():
@@ -93,6 +96,11 @@ def main():
             with open(LOG_PATH, "a") as logf:
                 logf.write(line + "\n")
             print(f"    logged: {line}")
+
+            # Move the ingested document out of raw-docs so it isn't re-ingested.
+            dest = os.path.join(ADDED_TO_MEMORY_DIR, filename)
+            shutil.move(path, dest)
+            print(f"    moved: {path} -> {dest}")
 
             # Persist the taxonomy incrementally (mirrors the full ingest run).
             if update_topics(topics, meta["main_topic"], meta["subtopic"]):
